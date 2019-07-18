@@ -12,6 +12,6 @@ export default class Monster extends Beings{
     }
     
     dead(){
-        
+        Monster_list.splice(Monster_list.indexOf(this));
     }
 }

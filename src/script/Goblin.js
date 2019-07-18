@@ -4,7 +4,7 @@ export default class Goblin extends Monster{
     constructor(){
         super();
 
-        this.HP = 100;
+        this.HP = 1;
 
         // set picture
         this.loadImage("./orz.jpg").scale(0.4,0.4);
@@ -12,9 +12,5 @@ export default class Goblin extends Monster{
 
     action(){
 
-    }
-    
-    dead(){
-        
     }
 }
