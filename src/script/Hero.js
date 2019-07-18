@@ -95,8 +95,8 @@ export default class Hero extends Beings{
         // exist monster
         if(nearest_monster !== null){
             return{
-                dx: nearest_monster.x - this.x,
-                dy: nearest_monster.y - this.y
+                dx: nearest_monster.mapX - this.mapX,
+                dy: nearest_monster.mapY - this.mapY
             };
         }
         else{

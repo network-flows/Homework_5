@@ -8,8 +8,8 @@ export default class Hero_Bullet extends Bullet{
         let vector_v = this.get_vector_v(this.v_max, the_Hero.direction_x, the_Hero.direction_y);
         this.vx = vector_v.vx;
         this.vy = vector_v.vy;
-        this.x = the_Hero.x;
-        this.y = the_Hero.y;
+        this.mapX = the_Hero.mapX;
+        this.mapY = the_Hero.mapY;
     }
 
     dead(){

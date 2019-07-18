@@ -12,12 +12,10 @@ export default class Bullet extends Beings{
     }
 
     action(){
-        //console.log("Bullet action");
-
         this.HP -= 1;
-        //console.log(this.HP);
-        this.x += this.vx;
-        this.y += this.vy;
+
+        this.mapX += this.vx;
+        this.mapY += this.vy;
 
         let attack_list = this.get_attack_list();
         this.explosion(attack_list);

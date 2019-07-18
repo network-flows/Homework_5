@@ -44,12 +44,14 @@ export default class Screen extends Laya.Sprite  //screen
         this.atk=new Wheel(this.w*3/4,this.h*3/4,this.w/15);
 		this.atk.alpha=0.8;
 
-		window.the_Hero = new Hero(the_screen);
+		window.the_Hero = new Hero();
 
 		// test
-		//let monster_test1 = new Goblin();
 		Laya.timer.frameLoop(1, this, this.onFrame);
 
+		let monster_test1 = new Goblin();
+		monster_test1.mapX = 100;
+		monster_test1.mapY = 100;
 	}
 
 	onFrame() {
@@ -66,10 +68,9 @@ export default class Screen extends Laya.Sprite  //screen
 			the_thing.up_date();
 		}
 		
-		const hero = window.the_Hero;
-		window.the_Hero.up_date();
-		hero.pos(Laya.Browser.clientWidth/2,Laya.Browser.clientHeight/2);
-		this.tiledMap.changeViewPort(hero.mapX-Laya.Browser.clientWidth/2,hero.mapY-Laya.Browser.clientHeight/2,Laya.Browser.clientWidth,Laya.Browser.clientHeight)
+		the_Hero.up_date();
+		the_Hero.pos(Laya.Browser.clientWidth/2,Laya.Browser.clientHeight/2);
+		this.tiledMap.changeViewPort(the_Hero.mapX-Laya.Browser.clientWidth/2,the_Hero.mapY-Laya.Browser.clientHeight/2,Laya.Browser.clientWidth,Laya.Browser.clientHeight)
 	}
 
 	onMouseDown(e){
