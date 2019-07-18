@@ -1,11 +1,11 @@
 export default class Beings extends Laya.Sprite {
-    constructor(screen){
+    constructor(){
         super();
-        the_screen.addChild(this);
+        Laya.stage.addChild(this);
 
         this.HP = 1;
-        this.x = -1;
-        this.y = -1;
+        this.mapX = -1;
+        this.mapY = -1;
         //this.visible = false;
     }
 

@@ -21,7 +21,9 @@ export default class Hero extends Beings{
 
         this.shoot_power = 1000;
         this.shoot_cost = 100;
-
+        
+        this.pivot(50,50)
+        this.graphics.drawRect(0,0,100,100,"#FFFF00")
     }
 
     action(){
@@ -41,8 +43,8 @@ export default class Hero extends Beings{
                 v_scale = 1;
             }
 
-            this.x += vx * v_scale;
-            this.y += vy * v_scale;
+            this.mapX += vx * v_scale;
+            this.mapY += vy * v_scale;
         }
         //--------- movement control part end ---------//
 

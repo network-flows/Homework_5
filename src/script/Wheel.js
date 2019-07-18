@@ -39,6 +39,13 @@ export default class Wheel extends Laya.Sprite
 
 	moveTo(x,y)
 	{
-		this.sp.pos(x,y)
+		//this.sp.pos(x,y)
+		let dx=x-this.x;
+		let dy=y-this.y;
+
+		let R=Math.sqrt(dx*dx+dy*dy);
+		let dx2=R>this.r? dx*this.r/R: dx;
+		let dy2=R>this.r? dy*this.r/R: dy;
+		this.sp.pos(this.x+dx2,this.y+dy2)
 	}
 }

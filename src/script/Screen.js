@@ -1,6 +1,7 @@
 import DragPoint from "./DragPoint"
 import Wheel from "./Wheel"
-
+import Hero from "./hero"
+import Goblin from "./Goblin"
 export default class Screen extends Laya.Sprite  //screen
 {
 	constructor(w,h)
@@ -15,15 +16,60 @@ export default class Screen extends Laya.Sprite  //screen
 		Laya.stage.addChild(this);
 		this.size(w,h);
 		this.pos(0,0);
+		this.loadMap();
+	}
 
-		this.on(Event.MOUSE_UP,this,this.onMouseUp);
-		this.on(Event.MOUSE_MOVE,this,this.onMouseMove);
-		this.on(Event.MOUSE_DOWN,this,this.onMouseDown);
-		this.on(Event.MOUSE_OUT,this,this.onMouseUP);
+	loadMap()
+	{
+		const 
+			TiledMap=Laya.TiledMap,
+			Rectangle=Laya.Rectangle,
+			Handler=Laya.Handler,
+			Event=Laya.Event,
+			Browser=Laya.Browser;
+		this.tiledMap=new TiledMap();
+		this.tiledMap.createMap("res\\tiledmaps\\test.json", new Rectangle(0, 0, Browser.width, Browser.height),Handler.create(this,this.onLoadedMap));
+	}
+
+	onLoadedMap()
+	{
+		console.log("ok")
+		const Event=Laya.Event;
+		Laya.stage.on(Event.MOUSE_UP,this,this.onMouseUp);
+		Laya.stage.on(Event.MOUSE_MOVE,this,this.onMouseMove);
+		Laya.stage.on(Event.MOUSE_DOWN,this,this.onMouseDown);
+		Laya.stage.on(Event.MOUSE_OUT,this,this.onMouseUP);
 
 		this.whl=new Wheel(this.w/4,this.h*3/4,this.w/15);
         this.atk=new Wheel(this.w*3/4,this.h*3/4,this.w/15);
-        this.atk.alpha=0.8
+		this.atk.alpha=0.8;
+
+		window.the_Hero = new Hero(the_screen);
+
+		// test
+		//let monster_test1 = new Goblin();
+		Laya.timer.frameLoop(1, this, this.onFrame);
+
+	}
+
+	onFrame() {
+		for (let the_monster of Monster_list) {
+			the_monster.up_date();
+		}
+		for (let the_bullet of Bullet_list) {
+			the_bullet.up_date();
+		}
+		for (let the_wall of Wall_list) {
+			the_wall.up_date();
+		}
+		for (let the_thing of Thing_list) {
+			the_thing.up_date();
+		}
+		
+		const hero = window.the_Hero;
+		window.the_Hero.up_date();
+		hero.pos(Laya.Browser.clientWidth/2,Laya.Browser.clientHeight/2);
+		this.tiledMap.changeViewPort(hero.mapX-Laya.Browser.clientWidth/2,hero.mapY-Laya.Browser.clientHeight/2,Laya.Browser.clientWidth,Laya.Browser.clientHeight)
 	}
 
 	onMouseDown(e){

@@ -12,7 +12,7 @@ export default class DragPoint extends Laya.Sprite  //no events
 		this.pivot(r,r);
 		this.graphics.drawCircle(r,r,r,"#FFFF00");
         this.pos(x,y);
-        this.alpha=0;
+        this.alpha=0.2;
 		this.r=r;
 		this.mouseThrough=true;
 	}

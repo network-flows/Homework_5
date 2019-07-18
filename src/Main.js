@@ -46,37 +46,14 @@ Laya.stage.alignH = Stage.ALIGN_CENTER;
 Stat.show();
 
 window.the_screen = new Screen(w, h);
-// set the Screen end
 
-// 角色容器
+
 window.Monster_list = [];
 window.Bullet_list = [];
 window.Wall_list = [];
 window.Thing_list = [];
+// set the Screen end
 
-window.the_Hero = new Hero(the_screen);
-the_Hero.loadImage("./orz.jpg").scale(0.3,0.3);
-
-// test
-let monster_test1 = new Goblin();
-
-//帧循环
-Laya.timer.frameLoop(1, this, onFrame);
-
+// 角色容器
 // update all
-function onFrame() {
-	for (let the_monster of Monster_list) {
-		the_monster.up_date();
-	}
-	for (let the_bullet of Bullet_list) {
-		the_bullet.up_date();
-	}
-	for (let the_wall of Wall_list) {
-		the_wall.up_date();
-	}
-	for (let the_thing of Thing_list) {
-		the_thing.up_date();
-	}
 
-	the_Hero.up_date();
-}
