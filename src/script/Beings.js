@@ -4,12 +4,15 @@ export default class Beings extends Laya.Sprite {
         Laya.stage.addChild(this);
 
         this.HP = 1;
-        this.mapX = -1;
-        this.mapY = -1;
+        this.mapX = 0;
+        this.mapY = 0;
         //this.visible = false;
     }
 
     up_date(){
+        this.x = this.mapX - the_Hero.mapX + Laya.Browser.clientWidth/2;
+        this.y = this.mapY - the_Hero.mapY + Laya.Browser.clientHeight/2;
+
         if(this.HP < 1){
             this.dead_action();
         }
@@ -42,8 +45,8 @@ export default class Beings extends Laya.Sprite {
     }
 
     get_distance(another){
-        let dx = this.x - another.x;
-        let dy = this.y - another.y;
+        let dx = this.mapX - another.mapX;
+        let dy = this.mapY - another.mapY;
         return this.dl(dx, dy);
     }
 

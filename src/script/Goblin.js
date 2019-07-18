@@ -4,9 +4,6 @@ export default class Goblin extends Monster{
     constructor(){
         super();
 
-        this.x = 100;
-        this.y = 100;
-
         this.HP = 100;
 
         // set picture
