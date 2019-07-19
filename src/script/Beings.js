@@ -6,7 +6,6 @@ export default class Beings extends Laya.Sprite {
         this.HP = 1;
         this.mapX = -1;
         this.mapY = -1;
-        //this.visible = false;
     }
 
     up_date(){

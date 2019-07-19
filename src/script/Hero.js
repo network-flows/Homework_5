@@ -21,9 +21,36 @@ export default class Hero extends Beings{
 
         this.shoot_power = 1000;
         this.shoot_cost = 100;
+//        this.graphics.drawRect(0,0,32,48,"#FFFF00")
+        this.pivot(16,24)
         
-        this.pivot(50,50)
-        this.graphics.drawRect(0,0,100,100,"#FFFF00")
+        this.ani = new Laya.Animation();
+        this.ani.loadAtlas("res//atlas//hero.atlas",Laya.Handler.create(this,this.onLoaded)); 
+    }
+
+    onLoaded()
+    {
+        console.log("load!!!")
+        Laya.stage.addChild(this.ani);
+        this.ani.interval=100;
+        this.ani.pos(this.x,this.y)
+        this.ani.index=1;
+        function getURLs(str,n)
+        {
+            let urls=[];
+            for(var i =0;i<n;i+=1)
+            {
+                urls.push("res\\atlas\\"+str+i+".png")
+            }
+            return urls;
+        }
+        
+        Laya.Animation.createFrames(getURLs("hero\\up",4),"hero_up");
+        Laya.Animation.createFrames(getURLs("hero\\down",4),"hero_down");
+        Laya.Animation.createFrames(getURLs("hero\\left",4),"hero_left");
+        Laya.Animation.createFrames(getURLs("hero\\right",4),"hero_right");
+        this.ani.play(0,true,"hero_right");
+        this.pre_dir="right"
     }
 
     action(){
@@ -61,7 +88,7 @@ export default class Hero extends Beings{
 
         // get orientation
         let nearest_monster_orientation = this.get_nearest_monster_orientation();
-        console.log(nearest_monster_orientation)
+       // console.log(nearest_monster_orientation)
         if(this.Object_dl(nearest_monster_orientation) > 1E-6 ){
             this.direction_x = nearest_monster_orientation.dx;
             this.direction_y = nearest_monster_orientation.dy;
@@ -71,6 +98,21 @@ export default class Hero extends Beings{
             this.direction_y = vy;
         }
 
+        function getDir(dx,dy,last){
+            if(dx>dy&&dx>-dy)return "right";
+            if(-dx>dy&&-dx>-dy)return "left";
+            if(dy>dx&&dy>-dx)return "down";
+            if(-dy>dx&&-dy>-dx)return "up";
+            return last;
+        }
+
+        let dir=getDir(this.direction_x,this.direction_y,this.pre_dir);
+        if(dir!=this.pre_dir)
+        {
+    //        console.log([dir,this.pre_dir]);
+            this.ani.play(0,true,"hero_"+dir);
+            this.pre_dir=dir;
+        }
         //--------- shoot control part end ---------//
     }
 
