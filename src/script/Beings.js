@@ -1,17 +1,24 @@
 export default class Beings extends Laya.Sprite {
     constructor(){
         super();
-        Laya.stage.addChild(this);
 
         this.HP = 1;
         this.mapX = 0;
         this.mapY = 0;
-        //this.visible = false;
 
         // collision system
         this.Type = "Beings";
         this.w = 50;
         this.h = 50;
+
+        this.root_reset()
+    }
+
+    root_reset(){
+        Laya.stage.addChild(this);
+        console.log("root_reset!")
+
+        this.branch_reset();
     }
 
     up_date(){
@@ -22,13 +29,15 @@ export default class Beings extends Laya.Sprite {
             this.dead_action();
         }
         else{
+            this.visible = true;
             this.action();
         }
     }
 
     dead_action(){
-        Laya.Pool.recover(this.Type, this);
+        this.visible = false;
         Laya.stage.removeChild(this);
+        Laya.Pool.recover(this.Type, this);
 
         this.dead();
     }

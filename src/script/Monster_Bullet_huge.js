@@ -7,9 +7,6 @@ export default class Monster_Bullet_huge extends Monster_Bullet{
 
         this.vx = vx;
         this.vy = vy;
-
-        this.HP = 40;
-        console.log("this.HP = ", this.HP);
     }
 
     attackable(the_enemy){
@@ -24,5 +21,10 @@ export default class Monster_Bullet_huge extends Monster_Bullet{
 
     dead(){
 
+    }
+
+    leaf_reset(){
+        this.HP = 40;
+        console.log("this.HP = ", this.HP);
     }
 }

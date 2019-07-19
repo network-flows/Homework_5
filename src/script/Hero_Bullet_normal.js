@@ -3,12 +3,8 @@ import Hero_Bullet from "./Hero_Bullet"
 export default class Hero_Bullet_normal extends Hero_Bullet{
     constructor(vx, vy){
         super();
-        this.v_max = 10;
+        this.v_max = 1;
         this.Type = "Hero_Bullet_normal";
-
-
-        this.HP = 40;
-        console.log("this.HP = ", this.HP);
 
         // set picture
         this.loadImage("./orz.jpg").scale(0.1,0.1);
@@ -25,6 +21,11 @@ export default class Hero_Bullet_normal extends Hero_Bullet{
     }
 
     dead(){
-        // Laya.Pool.recover("Hero_Bullet_normal", this.owner);
+
+    }
+
+    leaf_reset(){
+        this.HP = 150;
+        console.log("this.HP = ", this.HP);
     }
 }

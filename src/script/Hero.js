@@ -149,10 +149,16 @@ export default class Hero extends Beings{
 
     shoot_event(){
         let new_bullet = Laya.Pool.getItemByClass("Hero_Bullet_normal", Hero_Bullet_normal);
+        new_bullet.root_reset();
         console.log("shoot!")
     }
 
     dead(){
 
+    }
+
+    branch_reset(){
+        this.HP = this.HP_max;
+        this.armor = this.armor_max;
     }
 }

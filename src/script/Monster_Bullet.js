@@ -31,4 +31,9 @@ export default class Monster_Bullet extends Bullet{
         console.log("Monster_Bullet attack");
         
     }
+
+    branch_Hero_or_Monster_reset(){
+        this.leaf_reset()
+        
+    }
 }

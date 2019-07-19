@@ -4,7 +4,6 @@ export default class Monster extends Beings{
     constructor(){
         super();
 
-        Monster_list.push(this)
     }
 
     action(){
@@ -13,5 +12,12 @@ export default class Monster extends Beings{
     
     dead(){
         Monster_list.splice(Monster_list.indexOf(this));
+    }
+
+    branch_reset(){
+        console.log("branch_reset!")
+        Monster_list.push(this)
+
+        this.leaf_reset()
     }
 }

@@ -18,4 +18,8 @@ export default class Wall extends Beings{
     dead(){
         
     }
+
+    leaf_reset(){
+        this.HP = 30;
+    }
 }

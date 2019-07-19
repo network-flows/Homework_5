@@ -7,8 +7,6 @@ export default class Bullet extends Beings{
         this.vx = 1;
         this.vy = 1;
         this.v_max = 10;
-
-        Bullet_list.push(this);
     }
 
     action(){
@@ -44,5 +42,12 @@ export default class Bullet extends Beings{
     attack(element){
         console.log("Bullet attack");
 
+    }
+
+    branch_reset(){
+        console.log("branch_reset!")
+        Bullet_list.push(this);
+
+        this.branch_Hero_or_Monster_reset()
     }
 }
