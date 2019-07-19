@@ -20,7 +20,8 @@ export default class Thing extends Beings{
     }
 
     dead(){
-        
+        Thing_list.splice(Bullet_list.indexOf(this));
+
     }
 
     set_sentence(){

@@ -7,6 +7,11 @@ export default class Beings extends Laya.Sprite {
         this.mapX = 0;
         this.mapY = 0;
         //this.visible = false;
+
+        // collision system
+        this.Type = "Beings";
+        this.w = 50;
+        this.h = 50;
     }
 
     up_date(){
@@ -22,10 +27,10 @@ export default class Beings extends Laya.Sprite {
     }
 
     dead_action(){
-        this.visible = false;
-        this.dead();
+        Laya.Pool.recover(this.Type, this);
+        Laya.stage.removeChild(this);
 
-        //Laya.Pool.recover(String("the class name", this.owner));
+        this.dead();
     }
 
     dead(){

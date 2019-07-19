@@ -22,7 +22,8 @@ export default class Bullet extends Beings{
     }
 
     dead(){
-
+        Bullet_list.splice(Bullet_list.indexOf(this));
+        
     }
 
     // this should return a list that contain the elements to be attack

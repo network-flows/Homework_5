@@ -3,6 +3,7 @@ import Monster from "./Monster"
 export default class Goblin extends Monster{
     constructor(){
         super();
+        this.Type = "Goblin";
 
         this.HP = 1;
 
