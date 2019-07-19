@@ -4,7 +4,8 @@ export default class Hero_Bullet_normal extends Hero_Bullet{
     constructor(vx, vy){
         super();
         this.v_max = 10;
-        
+        this.Type = "Hero_Bullet_normal";
+
 
         this.HP = 40;
         console.log("this.HP = ", this.HP);

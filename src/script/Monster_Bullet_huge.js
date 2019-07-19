@@ -3,6 +3,8 @@ import Monster_Bullet from "./Monster_Bullet"
 export default class Monster_Bullet_huge extends Monster_Bullet{
     constructor(vx, vy){
         super();
+        this.Type = "Monster_Bullet_huge";
+
         this.vx = vx;
         this.vy = vy;
 
@@ -21,6 +23,6 @@ export default class Monster_Bullet_huge extends Monster_Bullet{
     }
 
     dead(){
-        // Laya.Pool.recover("Monster_Bullet_huge", this.owner);
+
     }
 }

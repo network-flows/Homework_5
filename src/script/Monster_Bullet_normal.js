@@ -3,6 +3,8 @@ import Monster_Bullet from "./Monster_Bullet"
 export default class Monster_Bullet_normal extends Monster_Bullet{
     constructor(vx, vy){
         super();
+        this.Type = "Monster_Bullet_normal";
+
         this.vx = vx;
         this.vy = vy;
 

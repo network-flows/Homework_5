@@ -21,7 +21,7 @@ export default class Hero extends Beings{
 
         this.shoot_power = 1000;
         this.shoot_cost = 100;
-//        this.graphics.drawRect(0,0,32,48,"#FFFF00")
+
         this.pivot(16,24)
         
         this.ani = new Laya.Animation();
@@ -88,7 +88,6 @@ export default class Hero extends Beings{
 
         // get orientation
         let nearest_monster_orientation = this.get_nearest_monster_orientation();
-       // console.log(nearest_monster_orientation)
         if(this.Object_dl(nearest_monster_orientation) > 1E-6 ){
             this.direction_x = nearest_monster_orientation.dx;
             this.direction_y = nearest_monster_orientation.dy;
@@ -109,7 +108,6 @@ export default class Hero extends Beings{
         let dir=getDir(this.direction_x,this.direction_y,this.pre_dir);
         if(dir!=this.pre_dir)
         {
-    //        console.log([dir,this.pre_dir]);
             this.ani.play(0,true,"hero_"+dir);
             this.pre_dir=dir;
         }
@@ -150,7 +148,7 @@ export default class Hero extends Beings{
     }
 
     shoot_event(){
-        let new_bullet = new Hero_Bullet_normal();
+        let new_bullet = Laya.Pool.getItemByClass("Hero_Bullet_normal", Hero_Bullet_normal);
         console.log("shoot!")
     }
 
