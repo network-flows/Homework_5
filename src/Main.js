@@ -47,13 +47,8 @@ Stat.show();
 
 window.the_screen = new Screen(w, h);
 
-
+// 角色容器
 window.Monster_list = [];
 window.Bullet_list = [];
 window.Wall_list = [];
 window.Thing_list = [];
-// set the Screen end
-
-// 角色容器
-// update all
-

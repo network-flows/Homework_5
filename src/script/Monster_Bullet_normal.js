@@ -21,7 +21,7 @@ export default class Monster_Bullet_normal extends Monster_Bullet{
     }
 
     dead(){
-        // Laya.Pool.recover("Monster_Bullet_normal", this.owner);
+        
     }
 }
 
