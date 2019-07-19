@@ -5,13 +5,16 @@ export default class Goblin extends Monster{
         super();
         this.Type = "Goblin";
 
-        this.HP = 1;
-
         // set picture
         this.loadImage("./orz.jpg").scale(0.4,0.4);
     }
 
     action(){
 
+    }
+
+    leaf_reset(){
+
+        this.HP = 20;
     }
 }

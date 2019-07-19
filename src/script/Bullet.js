@@ -7,8 +7,6 @@ export default class Bullet extends Beings{
         this.vx = 1;
         this.vy = 1;
         this.v_max = 10;
-
-        Bullet_list.push(this);
     }
 
     action(){
@@ -22,8 +20,9 @@ export default class Bullet extends Beings{
     }
 
     dead(){
-        Bullet_list.splice(Bullet_list.indexOf(this));
-        
+        console.log("before: "+Bullet_list.length);
+        Bullet_list.splice(Bullet_list.indexOf(this), 1);
+        console.log("after: "+Bullet_list.length);
     }
 
     // this should return a list that contain the elements to be attack
@@ -44,5 +43,12 @@ export default class Bullet extends Beings{
     attack(element){
         console.log("Bullet attack");
 
+    }
+
+    branch_reset(){
+        console.log("branch_reset 123!")
+        Bullet_list.push(this);
+
+        this.branch_Hero_or_Monster_reset()
     }
 }

@@ -1,17 +1,22 @@
 export default class Beings extends Laya.Sprite {
     constructor(){
         super();
-        Laya.stage.addChild(this);
 
         this.HP = 1;
         this.mapX = 0;
         this.mapY = 0;
-        //this.visible = false;
 
         // collision system
         this.Type = "Beings";
         this.w = 50;
         this.h = 50;
+    }
+
+    root_reset(){
+        Laya.stage.addChild(this);
+        console.log("root_reset!")
+
+        this.branch_reset();
     }
 
     up_date(){
@@ -22,13 +27,15 @@ export default class Beings extends Laya.Sprite {
             this.dead_action();
         }
         else{
+            this.visible = true;
             this.action();
         }
     }
 
     dead_action(){
-        Laya.Pool.recover(this.Type, this);
+        this.visible = false;
         Laya.stage.removeChild(this);
+        Laya.Pool.recover(this.Type, this);
 
         this.dead();
     }
@@ -69,5 +76,23 @@ export default class Beings extends Laya.Sprite {
                 vy: 0
             }
         }
+    }
+
+    getURLs(str,n)
+    {
+        let urls=[];
+        for(var i =0;i<n;i+=1)
+        {
+            urls.push("res\\atlas\\"+str+i+".png")
+        }
+        return urls;
+    }
+
+    getDir(dx,dy,last){
+        if(dx>dy&&dx>-dy)return "right";
+        if(-dx>dy&&-dx>-dy)return "left";
+        if(dy>dx&&dy>-dx)return "down";
+        if(-dy>dx&&-dy>-dx)return "up";
+        return last;
     }
 }

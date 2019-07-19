@@ -55,4 +55,12 @@ export default class Thing extends Beings{
     use_it(){
 
     }
+
+
+    branch_reset(){
+        console.log("branch_reset!")
+        Thing_list.push(this)
+
+        this.leaf_reset()
+    }
 }

@@ -5,11 +5,7 @@ export default class Monster_Bullet extends Bullet{
         super();
 
     }
-
-    dead(){
-        
-    }
-
+    
     get_attack_list(){
         let attack_list = [];
         for(let the_wall of Wall_list){
@@ -30,5 +26,10 @@ export default class Monster_Bullet extends Bullet{
     attack(element){
         console.log("Monster_Bullet attack");
         
+    }
+
+    branch_Hero_or_Monster_reset(){
+        this.leaf_reset()
+
     }
 }
