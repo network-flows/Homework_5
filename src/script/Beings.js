@@ -10,10 +10,14 @@ export default class Beings extends Laya.Sprite {
         this.Type = "Beings";
         this.w = 50;
         this.h = 50;
+
+        this.direction_x = 1;
+        this.direction_y = 1;
     }
 
     root_reset(){
         Laya.stage.addChild(this);
+        this.pivot(this.w / 2, this.h /2)
         console.log("root_reset!")
 
         this.branch_reset();
@@ -38,6 +42,10 @@ export default class Beings extends Laya.Sprite {
         Laya.Pool.recover(this.Type, this);
 
         this.dead();
+    }
+
+    get_harm(value){
+        this.HP -= value;
     }
 
     dead(){

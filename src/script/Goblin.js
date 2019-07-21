@@ -5,11 +5,14 @@ export default class Goblin extends Monster{
         super();
         this.Type = "Goblin";
 
+        this.w = 400;
+        this.h = 400;
+
         // set picture
         this.loadImage("./orz.jpg").scale(0.4,0.4);
     }
 
-    action(){
+    skill(){
 
     }
 

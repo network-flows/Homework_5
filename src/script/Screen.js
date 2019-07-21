@@ -2,6 +2,8 @@ import DragPoint from "./DragPoint"
 import Wheel from "./Wheel"
 import Hero from "./hero"
 import Goblin from "./Goblin"
+import Gunner from "./Gunner"
+
 export default class Screen extends Laya.Sprite  //screen
 {
 	constructor(w,h)
@@ -50,7 +52,7 @@ export default class Screen extends Laya.Sprite  //screen
 		// test
 		Laya.timer.frameLoop(1, this, this.onFrame);
 
-		let monster_test1 = new Goblin();
+		let monster_test1 = new Gunner();
 		monster_test1.root_reset();
 		monster_test1.mapX = 100;
 		monster_test1.mapY = 100;

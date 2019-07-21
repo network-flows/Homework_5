@@ -12,18 +12,18 @@ export default class Hero extends Beings{
         this.v_max = 5;
 
         // HP and armor
-        this.HP_max = 10;
+        this.HP_max = 100;
+        this.HP = 100;
         this.armor_max = 10;
         this.armot = 10;
 
         // shoot
-        this.direction_x = 1;
-        this.direction_y = 1;
-
         this.shoot_power = 1000;
-        this.shoot_cost = 100;
+        this.shoot_waiting = false;
 
-        this.pivot(16,24)
+        this.w = 32;
+        this.h = 48;
+
         this.main_gun = new Laya.Pool.getItemByClass('Gun_normal', Gun_normal);
         this.main_gun.root_reset();
         this.alternate_gun = null;
@@ -70,12 +70,24 @@ export default class Hero extends Beings{
         //--------- shoot control part ---------//
         
         // Shooting delay
-        if(this.shoot_power < 10000){
-            this.shoot_power += 1;
+        if(this.shoot() && this.shoot_power >= 0 && !this.shoot_waiting){
+            this.shoot_waiting = true;
         }
-        if(this.shoot_cost <= this.shoot_power && this.shoot()){
-            this.shoot_power = 0;
-            this.shoot_event();
+
+        if(this.shoot_waiting){
+            if(this.shoot_power > this.main_gun.first_waiting){
+                this.shoot_event();
+                this.shoot_power = -this.main_gun.second_waiting;
+                this.shoot_waiting = false;
+            }
+            else{
+                this.shoot_power += 1;
+            }
+        }
+        else{
+            if(this.shoot_power < 0){
+                this.shoot_power += 1;
+            }
         }
 
         // get orientation
@@ -133,6 +145,17 @@ export default class Hero extends Beings{
 
     shoot_event(){
         this.main_gun.shoot();
+    }
+
+    get_harm(value){
+        if(this.armor >= value){
+            this.armor -= value;
+        }
+        else{
+            this.armor = 0;
+            value -= this.armor;
+            this.HP -= value;
+        }
     }
 
     dead(){
