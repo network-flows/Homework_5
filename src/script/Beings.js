@@ -11,11 +11,13 @@ export default class Beings extends Laya.Sprite {
         this.w = 50;
         this.h = 50;
 
-        this.root_reset()
+        this.direction_x = 1;
+        this.direction_y = 1;
     }
 
     root_reset(){
         Laya.stage.addChild(this);
+        this.pivot(this.w / 2, this.h /2)
         console.log("root_reset!")
 
         this.branch_reset();
@@ -40,6 +42,10 @@ export default class Beings extends Laya.Sprite {
         Laya.Pool.recover(this.Type, this);
 
         this.dead();
+    }
+
+    get_harm(value){
+        this.HP -= value;
     }
 
     dead(){
@@ -78,5 +84,23 @@ export default class Beings extends Laya.Sprite {
                 vy: 0
             }
         }
+    }
+
+    getURLs(str,n)
+    {
+        let urls=[];
+        for(var i =0;i<n;i+=1)
+        {
+            urls.push("res\\atlas\\"+str+i+".png")
+        }
+        return urls;
+    }
+
+    getDir(dx,dy,last){
+        if(dx>dy&&dx>-dy)return "right";
+        if(-dx>dy&&-dx>-dy)return "left";
+        if(dy>dx&&dy>-dx)return "down";
+        if(-dy>dx&&-dy>-dx)return "up";
+        return last;
     }
 }

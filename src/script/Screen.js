@@ -2,6 +2,8 @@ import DragPoint from "./DragPoint"
 import Wheel from "./Wheel"
 import Hero from "./hero"
 import Goblin from "./Goblin"
+import Gunner from "./Gunner"
+
 export default class Screen extends Laya.Sprite  //screen
 {
 	constructor(w,h)
@@ -44,12 +46,14 @@ export default class Screen extends Laya.Sprite  //screen
         this.atk=new Wheel(this.w*3/4,this.h*3/4,this.w/15);
 		this.atk.alpha=0.8;
 
-		window.the_Hero = new Hero();
+		window.the_Hero = Laya.Pool.getItemByClass("Hero", Hero);
+		the_Hero.root_reset();
 
 		// test
 		Laya.timer.frameLoop(1, this, this.onFrame);
 
-		let monster_test1 = new Goblin();
+		let monster_test1 = new Gunner();
+		monster_test1.root_reset();
 		monster_test1.mapX = 100;
 		monster_test1.mapY = 100;
 	}
@@ -67,6 +71,8 @@ export default class Screen extends Laya.Sprite  //screen
 		for (let the_thing of Thing_list) {
 			the_thing.up_date();
 		}
+
+		console.log(Bullet_list.length)
 		
 		the_Hero.up_date();
 		the_Hero.pos(Laya.Browser.clientWidth/2,Laya.Browser.clientHeight/2);

@@ -20,8 +20,9 @@ export default class Bullet extends Beings{
     }
 
     dead(){
-        Bullet_list.splice(Bullet_list.indexOf(this));
-        
+        console.log("before: "+Bullet_list.length);
+        Bullet_list.splice(Bullet_list.indexOf(this), 1);
+        console.log("after: "+Bullet_list.length);
     }
 
     // this should return a list that contain the elements to be attack
@@ -45,7 +46,7 @@ export default class Bullet extends Beings{
     }
 
     branch_reset(){
-        console.log("branch_reset!")
+        console.log("branch_reset 123!")
         Bullet_list.push(this);
 
         this.branch_Hero_or_Monster_reset()

@@ -2,6 +2,7 @@ import Beings from "./Beings"
 import Bullet from "./Bullet";
 import Monster from "./Monster";
 import Hero_Bullet_normal from "./Hero_Bullet_normal";
+import Gun_normal from "./Gun_normal"
 
 export default class Hero extends Beings{
     constructor(){
@@ -11,21 +12,21 @@ export default class Hero extends Beings{
         this.v_max = 5;
 
         // HP and armor
-        this.HP_max = 10;
+        this.HP_max = 100;
+        this.HP = 100;
         this.armor_max = 10;
         this.armot = 10;
 
         // shoot
-        this.direction_x = 1;
-        this.direction_y = 1;
-
         this.shoot_power = 1000;
-        this.shoot_cost = 100;
+        this.shoot_waiting = false;
 
-        this.pivot(16,24)
-        
-        this.ani = new Laya.Animation();
-        this.ani.loadAtlas("res//atlas//hero.atlas",Laya.Handler.create(this,this.onLoaded)); 
+        this.w = 32;
+        this.h = 48;
+
+        this.main_gun = new Laya.Pool.getItemByClass('Gun_normal', Gun_normal);
+        this.main_gun.root_reset();
+        this.alternate_gun = null;
     }
 
     onLoaded()
@@ -35,20 +36,11 @@ export default class Hero extends Beings{
         this.ani.interval=100;
         this.ani.pos(this.x,this.y)
         this.ani.index=1;
-        function getURLs(str,n)
-        {
-            let urls=[];
-            for(var i =0;i<n;i+=1)
-            {
-                urls.push("res\\atlas\\"+str+i+".png")
-            }
-            return urls;
-        }
-        
-        Laya.Animation.createFrames(getURLs("hero\\up",4),"hero_up");
-        Laya.Animation.createFrames(getURLs("hero\\down",4),"hero_down");
-        Laya.Animation.createFrames(getURLs("hero\\left",4),"hero_left");
-        Laya.Animation.createFrames(getURLs("hero\\right",4),"hero_right");
+
+        Laya.Animation.createFrames(this.getURLs("hero\\up",4),"hero_up");
+        Laya.Animation.createFrames(this.getURLs("hero\\down",4),"hero_down");
+        Laya.Animation.createFrames(this.getURLs("hero\\left",4),"hero_left");
+        Laya.Animation.createFrames(this.getURLs("hero\\right",4),"hero_right");
         this.ani.play(0,true,"hero_right");
         this.pre_dir="right"
     }
@@ -78,12 +70,24 @@ export default class Hero extends Beings{
         //--------- shoot control part ---------//
         
         // Shooting delay
-        if(this.shoot_power < 10000){
-            this.shoot_power += 1;
+        if(this.shoot() && this.shoot_power >= 0 && !this.shoot_waiting){
+            this.shoot_waiting = true;
         }
-        if(this.shoot_cost <= this.shoot_power && this.shoot()){
-            this.shoot_power = 0;
-            this.shoot_event();
+
+        if(this.shoot_waiting){
+            if(this.shoot_power > this.main_gun.first_waiting){
+                this.shoot_event();
+                this.shoot_power = -this.main_gun.second_waiting;
+                this.shoot_waiting = false;
+            }
+            else{
+                this.shoot_power += 1;
+            }
+        }
+        else{
+            if(this.shoot_power < 0){
+                this.shoot_power += 1;
+            }
         }
 
         // get orientation
@@ -97,15 +101,7 @@ export default class Hero extends Beings{
             this.direction_y = vy;
         }
 
-        function getDir(dx,dy,last){
-            if(dx>dy&&dx>-dy)return "right";
-            if(-dx>dy&&-dx>-dy)return "left";
-            if(dy>dx&&dy>-dx)return "down";
-            if(-dy>dx&&-dy>-dx)return "up";
-            return last;
-        }
-
-        let dir=getDir(this.direction_x,this.direction_y,this.pre_dir);
+        let dir=this.getDir(this.direction_x,this.direction_y,this.pre_dir);
         if(dir!=this.pre_dir)
         {
             this.ani.play(0,true,"hero_"+dir);
@@ -148,9 +144,18 @@ export default class Hero extends Beings{
     }
 
     shoot_event(){
-        let new_bullet = Laya.Pool.getItemByClass("Hero_Bullet_normal", Hero_Bullet_normal);
-        new_bullet.root_reset();
-        console.log("shoot!")
+        this.main_gun.shoot();
+    }
+
+    get_harm(value){
+        if(this.armor >= value){
+            this.armor -= value;
+        }
+        else{
+            this.armor = 0;
+            value -= this.armor;
+            this.HP -= value;
+        }
     }
 
     dead(){
@@ -160,5 +165,8 @@ export default class Hero extends Beings{
     branch_reset(){
         this.HP = this.HP_max;
         this.armor = this.armor_max;
+
+        this.ani = new Laya.Animation();
+        this.ani.loadAtlas("res//atlas//hero.atlas",Laya.Handler.create(this,this.onLoaded));
     }
 }

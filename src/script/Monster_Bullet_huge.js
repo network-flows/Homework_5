@@ -13,14 +13,10 @@ export default class Monster_Bullet_huge extends Monster_Bullet{
         return this.get_distance(the_enemy) < 40;
     }
 
-    attack(element){
+    attack(enemy){
         console.log("Monster_Bullet_huge attack");
         
-        element.HP -= 20;
-    }
-
-    dead(){
-
+        enemy.get_harm(20);
     }
 
     leaf_reset(){
