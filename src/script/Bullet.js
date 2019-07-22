@@ -12,8 +12,7 @@ export default class Bullet extends Beings{
     action(){
         this.HP -= 1;
 
-        this.mapX += this.vx;
-        this.mapY += this.vy;
+        this.move_by_dx_dy(this.vx, this.vy)
 
         let attack_list = this.get_attack_list();
         this.explosion(attack_list);

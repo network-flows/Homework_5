@@ -3,8 +3,8 @@ export default class Beings extends Laya.Sprite {
         super();
 
         this.HP = 1;
-        this.mapX = 0;
-        this.mapY = 0;
+        this.mapX = 100;
+        this.mapY = 100;
 
         // collision system
         this.Type = "Beings";
@@ -102,5 +102,71 @@ export default class Beings extends Laya.Sprite {
         if(dy>dx&&dy>-dx)return "down";
         if(-dy>dx&&-dy>-dx)return "up";
         return last;
+    }
+
+    reachable(new_mapX, new_mapY){
+        let point_set = [];
+        point_set.push({x: new_mapX + this.w/2, y: new_mapY + this.h/2});
+        point_set.push({x: new_mapX, y: new_mapY + this.h/2});
+        point_set.push({x: new_mapX - this.w/2, y: new_mapY + this.h/2});
+        point_set.push({x: new_mapX - this.w/2, y: new_mapY});
+        point_set.push({x: new_mapX - this.w/2, y: new_mapY - this.h/2});
+        point_set.push({x: new_mapX, y: new_mapY - this.h/2});
+        point_set.push({x: new_mapX + this.w/2, y: new_mapY - this.h/2});
+        point_set.push({x: new_mapX + this.w/2, y: new_mapY});
+
+        let ok = true;
+
+        for(let the_point of point_set){
+            ok &= the_screen.getPass(the_point.x, the_point.y);
+        }
+        return ok;
+    }
+
+    move_by_dx_dy(dx, dy){
+        while(Math.abs(dx) > 0.3 || Math.abs(dy) > 0.3){
+            console.log("...")
+            // try: move x
+            if(dx > 0.1){
+                if(this.reachable(this.mapX + 0.3, this.mapY)){
+                    dx -= 0.3;
+                    this.mapX += 0.3;
+                }
+                else{
+                    dx = 0;
+                }
+            }
+
+            if(dx < -0.1){
+                if(this.reachable(this.mapX - 0.3, this.mapY)){
+                    dx += 0.3;
+                    this.mapX -= 0.3;
+                }
+                else{
+                    dx = 0;
+                }
+            }
+
+            // try: move y
+            if(dy > 0.1){
+                if(this.reachable(this.mapX, this.mapY + 0.3)){
+                    dy -= 0.3;
+                    this.mapY += 0.3;
+                }
+                else{
+                    dy = 0;
+                }
+            }
+
+            if(dy < -0.1){
+                if(this.reachable(this.mapX, this.mapY - 0.3)){
+                    dy += 0.3;
+                    this.mapY -= 0.3;
+                }
+                else{
+                    dy = 0;
+                }
+            }
+        }
     }
 }

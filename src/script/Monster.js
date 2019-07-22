@@ -28,8 +28,7 @@ export default class Monster extends Beings{
         this.vx = 1;
         this.vy = 1;
 
-        this.mapX += this.vx;
-        this.mapY += this.vy;
+        this.move_by_dx_dy(this.vx, this.vy)
     }
     
     dead(){

@@ -62,8 +62,7 @@ export default class Hero extends Beings{
                 v_scale = 1;
             }
 
-            this.mapX += vx * v_scale;
-            this.mapY += vy * v_scale;
+            this.move_by_dx_dy(vx * v_scale, vy * v_scale)
         }
         //--------- movement control part end ---------//
 
@@ -108,7 +107,6 @@ export default class Hero extends Beings{
             this.pre_dir=dir;
         }
         //--------- shoot control part end ---------//
-        the_screen.getPass(this.mapX,this.mapY);
     }
 
     getV(){

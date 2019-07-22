@@ -54,8 +54,8 @@ export default class Screen extends Laya.Sprite  //screen
 
 		let monster_test1 = new Gunner();
 		monster_test1.root_reset();
-		monster_test1.mapX = 100;
-		monster_test1.mapY = 100;
+		monster_test1.mapX = 500;
+		monster_test1.mapY = 500;
 
 		this.layer_pass=this.tiledMap.getLayerByName("pass");
 	}
@@ -73,8 +73,6 @@ export default class Screen extends Laya.Sprite  //screen
 		for (let the_thing of Thing_list) {
 			the_thing.up_date();
 		}
-
-		//console.log(Bullet_list.length)
 		
 		the_Hero.up_date();
 		the_Hero.pos(Laya.Browser.clientWidth/2,Laya.Browser.clientHeight/2);
@@ -133,9 +131,7 @@ export default class Screen extends Laya.Sprite  //screen
 		const Y=Math.floor(mapY/32);
 		const layer=this.tiledMap.getLayerByIndex(0);
 		const a=layer.getTileData(X,Y);
-		/*const pass1= this.tiledMap.getTileProperties(0,a-1,"walkable")
-		const pass2= this.tiledMap.getTileProperties(1,a-1,"walkable")
-		console.log([X,Y,a,pass1,pass2])*/
+
 		let ans=this.tiledMap._jsonData.tilesets[0].tiles[a-1].properties[0].value;
 		console.log(ans)
 		return ans
