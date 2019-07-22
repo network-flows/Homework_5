@@ -30,7 +30,7 @@ export default class Screen extends Laya.Sprite  //screen
 			Event=Laya.Event,
 			Browser=Laya.Browser;
 		this.tiledMap=new TiledMap();
-		this.tiledMap.createMap("res\\tiledmaps\\test.json", new Rectangle(0, 0, Browser.width, Browser.height),Handler.create(this,this.onLoadedMap));
+		this.tiledMap.createMap("res\\tiledmaps\\map0.json", new Rectangle(0, 0, Browser.width, Browser.height),Handler.create(this,this.onLoadedMap));
 	}
 
 	onLoadedMap()
@@ -56,6 +56,8 @@ export default class Screen extends Laya.Sprite  //screen
 		monster_test1.root_reset();
 		monster_test1.mapX = 100;
 		monster_test1.mapY = 100;
+
+		this.layer_pass=this.tiledMap.getLayerByName("pass");
 	}
 
 	onFrame() {
@@ -127,13 +129,15 @@ export default class Screen extends Laya.Sprite  //screen
 
 	getPass(mapX,mapY)
 	{
-		const X=Math.floor(mapX/100);
-		const Y=Math.floor(mapY/100);
-		const layer=this.tiledMap.getLayerByName("back");
+		const X=Math.floor(mapX/32);
+		const Y=Math.floor(mapY/32);
+		const layer=this.tiledMap.getLayerByIndex(0);
 		const a=layer.getTileData(X,Y);
 		/*const pass1= this.tiledMap.getTileProperties(0,a-1,"walkable")
 		const pass2= this.tiledMap.getTileProperties(1,a-1,"walkable")
 		console.log([X,Y,a,pass1,pass2])*/
-		return this.tiledMap._jsonData.tilesets[0].tiles[a-1].properties[0].value
+		let ans=this.tiledMap._jsonData.tilesets[0].tiles[a-1].properties[0].value;
+		console.log(ans)
+		return ans
 	}
 }
