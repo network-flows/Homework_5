@@ -108,6 +108,7 @@ export default class Hero extends Beings{
             this.pre_dir=dir;
         }
         //--------- shoot control part end ---------//
+        the_screen.getPass(this.mapX,this.mapY);
     }
 
     getV(){

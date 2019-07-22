@@ -72,7 +72,7 @@ export default class Screen extends Laya.Sprite  //screen
 			the_thing.up_date();
 		}
 
-		console.log(Bullet_list.length)
+		//console.log(Bullet_list.length)
 		
 		the_Hero.up_date();
 		the_Hero.pos(Laya.Browser.clientWidth/2,Laya.Browser.clientHeight/2);
@@ -123,5 +123,17 @@ export default class Screen extends Laya.Sprite  //screen
 	getShoot()
 	{
         return this.atk.ID !== null;
+	}
+
+	getPass(mapX,mapY)
+	{
+		const X=Math.floor(mapX/100);
+		const Y=Math.floor(mapY/100);
+		const layer=this.tiledMap.getLayerByName("back");
+		const a=layer.getTileData(X,Y);
+		/*const pass1= this.tiledMap.getTileProperties(0,a-1,"walkable")
+		const pass2= this.tiledMap.getTileProperties(1,a-1,"walkable")
+		console.log([X,Y,a,pass1,pass2])*/
+		return this.tiledMap._jsonData.tilesets[0].tiles[a-1].properties[0].value
 	}
 }
