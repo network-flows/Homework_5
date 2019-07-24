@@ -28,7 +28,28 @@ export default class Monster extends Beings{
         }
     }
 
+    force(another){
+        let dx = this.mapX - another.mapX;
+        let dy = this.mapY - another.mapY;
+    
+        let fx = 0;
+        let fy = 0;
+
+        if(Math.abs(dx) > 1E-6){
+            fx = 1 / dx;
+        }
+        if(Math.abs(dy) > 1E-6){
+            fy = 1 / dy;
+        }
+
+        return {
+            fx: fx, 
+            fy: fy
+        };
+    }
+
     wandering(){
+        console.log(Monster_list.length)
         let v = {vx: 0, vy: 0};
         if(this.shooter){
             if(this.get_distance(the_Hero) > this.range / 1.5){
@@ -39,7 +60,24 @@ export default class Monster extends Beings{
             }
         }
 
-        this.move_by_dx_dy(v.vx, v.vy)
+        let force_avg = {
+            fx: 0,
+            fy: 0
+        };
+        for(let the_monster of Monster_list){
+            if(this !== the_monster){
+                let f = this.force(the_monster);
+                force_avg.fx += f.fx;
+                force_avg.fy += f.fy;
+            }
+        }
+
+        if(Monster_list.length > 1){
+            force_avg.fx /= (Monster_list.length - 1);
+            force_avg.fy /= (Monster_list.length - 1);
+        }
+
+        this.move_by_dx_dy(v.vx + force_avg.fx / this.m, v.vy + force_avg.fx / this.m);
     }
     
     dead(){

@@ -15,6 +15,8 @@ export default class Beings extends Laya.Sprite {
         this.v_max = 5;
         this.direction_x = 1;
         this.direction_y = 1;
+
+        this.m = 0.1;
     }
 
     root_reset(){

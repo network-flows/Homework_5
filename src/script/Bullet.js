@@ -7,15 +7,22 @@ export default class Bullet extends Beings{
         this.vx = 1;
         this.vy = 1;
         this.v_max = 10;
+
+        this.m = 0.01;
     }
 
     action(){
-        this.HP -= 1;
+        let will_die = this.hit_wall(this.vx, this.vy);
 
+        this.HP -= 1;
         this.move_by_dx_dy(this.vx, this.vy)
 
         let attack_list = this.get_attack_list();
         this.explosion(attack_list);
+        
+        if(will_die){
+            this.HP = -1;
+        }
     }
 
     dead(){
@@ -51,7 +58,7 @@ export default class Bullet extends Beings{
         this.branch_Hero_or_Monster_reset()
     }
 
-    boom(){
-        
+    hit_wall(dx, dy){
+        return !this.reachable(this.mapX + dx, this.mapY + dy);
     }
 }
