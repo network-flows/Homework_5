@@ -101,10 +101,8 @@ export default class Beings extends Laya.Sprite {
     }
 
     getDir(dx,dy,last){
-        if(dx>dy&&dx>-dy)return "right";
-        if(-dx>dy&&-dx>-dy)return "left";
-        if(dy>dx&&dy>-dx)return "down";
-        if(-dy>dx&&-dy>-dx)return "up";
+        if(dx>0)return "right";
+        if(-dx>0)return "left";
         return last;
     }
 

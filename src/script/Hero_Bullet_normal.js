@@ -6,10 +6,9 @@ export default class Hero_Bullet_normal extends Hero_Bullet {
         this.v_max = 5;
         this.Type = "Hero_Bullet_normal";
 
-        // set picture
         this.r = 20;
-        this.graphics.drawCircle(0, 0, this.r, "#FFFF00");
-        //this.pivot(this.r, this.r);
+        this.size(this.r*2,this.r*2)
+        this.graphics.drawCircle(this.r, this.r, this.r, "#FFFF00");
         this.filters = [new Laya.GlowFilter("#FFFFFF", 10, 0, 0)];
     }
 
@@ -26,5 +25,7 @@ export default class Hero_Bullet_normal extends Hero_Bullet {
     leaf_reset() {
         this.HP = 50;
 
+        this.rotation=-Math.atan2(the_Hero.direction_x,the_Hero.direction_y)/Math.PI*180;
+        this.filters = [new Laya.GlowFilter("#FFFFFF", 5, 0, 0)];
     }
 }
