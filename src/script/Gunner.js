@@ -6,11 +6,13 @@ export default class Gunner extends Monster{
         super();
         this.Type = "Gunner";
 
-        this.w = 400;
-        this.h = 400;
-
+        this.width = 100;
+        this.height = 100;
+        this.range = 10 * 40;
+        this.v_max = 3;
+        
         // set picture
-        this.loadImage("./orz.jpg").scale(0.4,0.4);
+        this.loadImage("./orz.jpg");
     }
 
     skill(){
@@ -22,7 +24,6 @@ export default class Gunner extends Monster{
     }
 
     leaf_reset(){
-
         this.HP = 300;
     }
 }

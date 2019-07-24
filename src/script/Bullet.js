@@ -50,4 +50,8 @@ export default class Bullet extends Beings{
 
         this.branch_Hero_or_Monster_reset()
     }
+
+    boom(){
+        
+    }
 }

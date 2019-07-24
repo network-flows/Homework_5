@@ -8,16 +8,18 @@ export default class Beings extends Laya.Sprite {
 
         // collision system
         this.Type = "Beings";
-        this.w = 50;
-        this.h = 50;
+        this.width = 50;
+        this.height = 50;
 
+        // movement
+        this.v_max = 5;
         this.direction_x = 1;
         this.direction_y = 1;
     }
 
     root_reset(){
         Laya.stage.addChild(this);
-        this.pivot(this.w / 2, this.h /2)
+        this.pivot(this.width / 2, this.height /2)
         console.log("root_reset!")
 
         this.branch_reset();
@@ -106,14 +108,14 @@ export default class Beings extends Laya.Sprite {
 
     reachable(new_mapX, new_mapY){
         let point_set = [];
-        point_set.push({x: new_mapX + this.w/2, y: new_mapY + this.h/2});
-        point_set.push({x: new_mapX, y: new_mapY + this.h/2});
-        point_set.push({x: new_mapX - this.w/2, y: new_mapY + this.h/2});
-        point_set.push({x: new_mapX - this.w/2, y: new_mapY});
-        point_set.push({x: new_mapX - this.w/2, y: new_mapY - this.h/2});
-        point_set.push({x: new_mapX, y: new_mapY - this.h/2});
-        point_set.push({x: new_mapX + this.w/2, y: new_mapY - this.h/2});
-        point_set.push({x: new_mapX + this.w/2, y: new_mapY});
+        point_set.push({x: new_mapX + this.width/2, y: new_mapY + this.height/2});
+        point_set.push({x: new_mapX, y: new_mapY + this.height/2});
+        point_set.push({x: new_mapX - this.width/2, y: new_mapY + this.height/2});
+        point_set.push({x: new_mapX - this.width/2, y: new_mapY});
+        point_set.push({x: new_mapX - this.width/2, y: new_mapY - this.height/2});
+        point_set.push({x: new_mapX, y: new_mapY - this.height/2});
+        point_set.push({x: new_mapX + this.width/2, y: new_mapY - this.height/2});
+        point_set.push({x: new_mapX + this.width/2, y: new_mapY});
 
         let ok = true;
 
@@ -124,6 +126,21 @@ export default class Beings extends Laya.Sprite {
     }
 
     move_by_dx_dy(dx, dy){
+        if(this.reachable(this.mapX + dx, this.mapY)){
+            this.mapX += dx;
+        }
+        else if(this.reachable(this.mapX + dx / 2, this.mapY)){
+            this.mapX += dx / 2;
+        }
+
+        if(this.reachable(this.mapX, this.mapY + dy)){
+            this.mapY += dy;
+        }
+        else if(this.reachable(this.mapX, this.mapY + dy / 2)){
+            this.mapY += dy / 2;
+        }
+
+        /*
         while(Math.abs(dx) > 0.3 || Math.abs(dy) > 0.3){
             console.log("...")
             // try: move x
@@ -168,5 +185,6 @@ export default class Beings extends Laya.Sprite {
                 }
             }
         }
+        */
     }
 }

@@ -6,6 +6,9 @@ export default class Monster extends Beings{
 
         this.skill_power = 1000;
         this.skill_cost = 360;
+
+        this.shooter = true;
+        this.range = 1000;
     }
 
     action(){
@@ -14,6 +17,7 @@ export default class Monster extends Beings{
 
         this.wandering();
 
+        // shooting control
         if(this.skill_power < 1000){
             this.skill_power += 1;
         }
@@ -25,10 +29,17 @@ export default class Monster extends Beings{
     }
 
     wandering(){
-        this.vx = 1;
-        this.vy = 1;
+        let v = {vx: 0, vy: 0};
+        if(this.shooter){
+            if(this.get_distance(the_Hero) > this.range / 1.5){
+                v = this.get_vector_v(this.v_max, this.direction_x, this.direction_y);
+            }
+            else if (this.get_distance(the_Hero) < this.range / 2){
+                v = this.get_vector_v(this.v_max, -this.direction_x, -this.direction_y);
+            }
+        }
 
-        this.move_by_dx_dy(this.vx, this.vy)
+        this.move_by_dx_dy(v.vx, v.vy)
     }
     
     dead(){

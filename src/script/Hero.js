@@ -21,8 +21,8 @@ export default class Hero extends Beings{
         this.shoot_power = 1000;
         this.shoot_waiting = false;
 
-        this.w = 32;
-        this.h = 48;
+        this.width = 32;
+        this.height = 48;
 
         this.main_gun = new Laya.Pool.getItemByClass('Gun_normal', Gun_normal);
         this.main_gun.root_reset();

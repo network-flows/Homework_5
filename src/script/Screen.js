@@ -12,8 +12,8 @@ export default class Screen extends Laya.Sprite  //screen
 		const 
 			Sprite = Laya.Sprite,
 			Event = Laya.Event;
-		this.w=w;
-		this.h=h;
+		this.width=this.width;
+		this.height=h;
 
 		Laya.stage.addChild(this);
 		this.size(w,h);
@@ -42,8 +42,8 @@ export default class Screen extends Laya.Sprite  //screen
 		Laya.stage.on(Event.MOUSE_DOWN,this,this.onMouseDown);
 		Laya.stage.on(Event.MOUSE_OUT,this,this.onMouseUP);
 
-		this.whl=new Wheel(this.w/4,this.h*3/4,this.w/15);
-        this.atk=new Wheel(this.w*3/4,this.h*3/4,this.w/15);
+		this.whl=new Wheel(this.width/4,this.height*3/4,this.width/15);
+        this.atk=new Wheel(this.width*3/4,this.height*3/4,this.width/15);
 		this.atk.alpha=0.8;
 
 		window.the_Hero = Laya.Pool.getItemByClass("Hero", Hero);
