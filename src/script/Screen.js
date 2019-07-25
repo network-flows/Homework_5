@@ -5,6 +5,7 @@ import Goblin from "./Goblin"
 import Gunner from "./Gunner"
 import Gate from "./Gate"
 import HPWindow from "./HPWindow"
+import God from "./God"
 
 export default class Screen extends Laya.Sprite  //screen
 {
@@ -22,12 +23,18 @@ export default class Screen extends Laya.Sprite  //screen
 		this.loadMap();
 
 		this.number = 0;
+		this.difficulty = 1;
 
 		this.time_count = 0;
 		this.time_interval = 800;
 
 		this.mapX_max = 1000;
 		this.mapY_max = 1000;
+		Laya.Animation.createFrames(this.getURLs("hero/left",4),"hero_left");
+		Laya.Animation.createFrames(this.getURLs("hero/right",4),"hero_right");
+		Laya.Animation.createFrames(this.getURLs("key/base",4),"key");
+		Laya.Animation.createFrames(this.getURLs("gunner/left",4),"Gunner_left");
+		Laya.Animation.createFrames(this.getURLs("gunner/right",4),"Gunner_right");
 	}
 
 	loadMap() {
@@ -42,7 +49,6 @@ export default class Screen extends Laya.Sprite  //screen
 	}
 
 	onLoadedMap() {
-		console.log("ok")
 		const Event = Laya.Event;
 		Laya.stage.on(Event.MOUSE_UP, this, this.onMouseUp);
 		Laya.stage.on(Event.MOUSE_MOVE, this, this.onMouseMove);
@@ -78,14 +84,26 @@ export default class Screen extends Laya.Sprite  //screen
 		Laya.timer.frameLoop(1, this, this.onFrame);
 
 		// start gate
-		let a_gate = Laya.Pool.getItemByClass("Gate", Gate);
-		a_gate.root_reset();
+		let gate1 = Laya.Pool.getItemByClass("Gate", Gate);
+		gate1.root_reset();
+
+		let gate2 = Laya.Pool.getItemByClass("Gate", Gate);
+		gate2.root_reset();
+
+		gate2.mapX = 380;
+		gate2.mapY = 100;
+		gate2.difficulty = 3;
+
+		// the god at home
+		let a_god = Laya.Pool.getItemByClass("God", God);
+		a_god.root_reset();
 
 		// 
 		this.HPWindow = new HPWindow()
 	}	
 
 	generate_monster(monster_amount) {
+		console.log("gene")
 		let cur_amount = 0;
 		while(cur_amount < monster_amount){
 			let new_monster = Laya.Pool.getItemByClass("Gunner", Gunner);
@@ -97,7 +115,6 @@ export default class Screen extends Laya.Sprite  //screen
 				if(new_monster.reachable(new_x, new_y)){
 					new_monster.mapX = new_x;
 					new_monster.mapY = new_y;
-					console.log("monster at "+new_monster.mapX+","+new_monster.mapY)
 					break;
 				}
 			}
@@ -105,9 +122,13 @@ export default class Screen extends Laya.Sprite  //screen
 	}
 
 	onFrame() {
+		//console.log("------------------------want start------------------------")
+		//console.log(this.paused)
 		if(this.paused){
+			console.log("use")
 			return;
 		}
+		//console.log("------------------------real start------------------------")
 
 		// 无尽模式
 		/*
@@ -135,6 +156,8 @@ export default class Screen extends Laya.Sprite  //screen
 		this.tiledMap.changeViewPort(the_Hero.mapX - Laya.Browser.clientWidth / 2, the_Hero.mapY - Laya.Browser.clientHeight / 2, Laya.Browser.clientWidth, Laya.Browser.clientHeight)
 
 		this.HPWindow.update()
+
+		//console.log("----------------------------------------------")
 	}
 
 	onMouseDown(e) {
@@ -180,7 +203,6 @@ export default class Screen extends Laya.Sprite  //screen
 		if (this.tiledMap._jsonData.tilesets[0].tiles[a - 1] !== undefined) {
 			return this.tiledMap._jsonData.tilesets[0].tiles[a - 1].properties[0].value;
 		}
-
 		return false
 	}
 
@@ -214,6 +236,8 @@ export default class Screen extends Laya.Sprite  //screen
 	}
 
 	map_change() {
+		console.log("pause set true")
+		this.paused = true;
 		const number = this.number;
 		this.number += 1;
 		
@@ -235,17 +259,30 @@ export default class Screen extends Laya.Sprite  //screen
 		for (let the_thing of Thing_list) {
 			the_thing.HP = -1;
 		}
+
 		this.tiledMap.destroy();
 		this.tiledMap.createMap("res/tiledmaps/"+bg+idx+".json", new Rectangle(0, 0, Browser.width, Browser.height), Handler.create(this, this.onLoadedMap2));
-		this.paused = true;
 	}
 
 	onLoadedMap2() {
-		this.atk.type = "shoot";
+		the_Hero.mapX = 100;
+		the_Hero.mapY = 100;
+
 		the_Hero.root_reset();
-		console.log("loadMap!")
+		this.atk.type = "shoot";
 		this.tiledMap.changeViewPort(0, 0, Laya.Browser.clientWidth, Laya.Browser.clientHeight)
+		this.generate_monster(this.number * this.difficulty)
+
 		this.paused = false;
-		this.generate_monster(this.number * 1)
 	}
+
+	getURLs(str,n)
+    {
+        let urls=[];
+        for(var i =0;i<n;i+=1)
+        {
+            urls.push("res/atlas/"+str+i+".png")
+        }
+        return urls;
+    }
 }

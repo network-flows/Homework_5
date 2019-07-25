@@ -5,6 +5,9 @@ import Gun from "./Gun"
 export default class Gun_normal extends Gun{
     constructor(){
         super();
+        this.Type = "Gun_normal"
+
+
         this.first_waiting = 2;
         this.second_waiting = 10;
         
@@ -20,5 +23,6 @@ export default class Gun_normal extends Gun{
     
     leaf_reset(){
         this.pivot(8,16);
+        this.visible=true;
     }
 }

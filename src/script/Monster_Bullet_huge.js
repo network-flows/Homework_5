@@ -14,13 +14,11 @@ export default class Monster_Bullet_huge extends Monster_Bullet{
     }
 
     attack(enemy){
-        console.log("Monster_Bullet_huge attack");
         
         enemy.get_harm(20);
     }
 
     leaf_reset(){
         this.HP = 40;
-        console.log("this.HP = ", this.HP);
     }
 }

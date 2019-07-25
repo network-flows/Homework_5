@@ -20,17 +20,25 @@ export default class Beings extends Laya.Sprite {
     }
 
     root_reset(){
+        this.visible = false;
         Laya.stage.addChild(this);
         this.pivot(this.width / 2, this.height /2)
-        console.log("root_reset!")
         this.zOrder=0;
+        if(this.ani)
+        {
+            Laya.stage.addChild(this.ani)
+        }
         this.branch_reset();
     }
 
     up_date(){
         this.x = this.mapX - the_Hero.mapX + Laya.Browser.clientWidth/2;
         this.y = this.mapY - the_Hero.mapY + Laya.Browser.clientHeight/2;
-
+        if(this.ani)
+        {
+            this.ani.pos(this.x,this.y)
+        }
+        
         if(this.HP < 1){
             this.dead_action();
         }
@@ -43,8 +51,12 @@ export default class Beings extends Laya.Sprite {
     dead_action(){
         this.visible = false;
         Laya.stage.removeChild(this);
+        if(this.ani)
+        {
+            this.ani.visible=false;
+            Laya.stage.removeChild(this.ani)
+        }
         Laya.Pool.recover(this.Type, this);
-
         this.dead();
     }
 
@@ -57,7 +69,7 @@ export default class Beings extends Laya.Sprite {
     }
 
     action(){
-        console.log("Beings action")
+
     }
 
     dl(dx, dy){
@@ -99,7 +111,6 @@ export default class Beings extends Laya.Sprite {
         }
         return urls;
     }
-
     getDir(dx,dy,last){
         if(dx>0)return "right";
         if(-dx>0)return "left";

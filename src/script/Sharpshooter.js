@@ -17,8 +17,6 @@ export default class Sharpshooter extends Monster{
         let new_bullet = Laya.Pool.getItemByClass("Sharpshooter", Sharpshooter);
         new_bullet.root_reset();
         new_bullet.init(this);
-
-        console.log("shoot!")
     }
 
     leaf_reset(){

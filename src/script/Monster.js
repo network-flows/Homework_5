@@ -7,7 +7,7 @@ export default class Monster extends Beings{
 
         this.skill_power = 1000;
         this.skill_cost = 360;
-
+        
         this.shooter = true;
         this.range = 1000;
     }
@@ -15,6 +15,13 @@ export default class Monster extends Beings{
     action(){
         this.direction_x = this.get_hero_orientation().dx;
         this.direction_y = this.get_hero_orientation().dy;
+
+        let dir=this.getDir(this.direction_x,this.direction_y,this.pre_dir);
+        if(dir!=this.pre_dir)
+        {
+            this.ani.play(0,true,this.Type+"_"+dir);
+            this.pre_dir=dir;
+        }
 
         this.wandering();
 
@@ -50,7 +57,6 @@ export default class Monster extends Beings{
     }
 
     wandering(){
-        console.log(Monster_list.length)
         let v = {vx: 0, vy: 0};
         if(this.shooter){
             if(this.get_distance(the_Hero) > this.range / 1.5){
@@ -90,9 +96,9 @@ export default class Monster extends Beings{
     }
 
     branch_reset(){
-        console.log("branch_reset!")
         Monster_list.push(this)
-
+        this.pre_dir="right"
+        this.ani.play(this.Type+"_right");
         this.leaf_reset()
     }
 

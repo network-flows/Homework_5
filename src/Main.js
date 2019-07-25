@@ -48,6 +48,6 @@ let h = Browser.clientHeight;
 Laya.stage.alignV = Stage.ALIGN_MIDDLE;
 Laya.stage.alignH = Stage.ALIGN_CENTER;
 
-//Stat.show();
+Stat.show();
 
 window.the_screen = new Screen(w, h);

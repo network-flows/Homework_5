@@ -19,7 +19,6 @@ export default class Monster_Bullet extends Bullet{
     }
     
     attack(element){
-        console.log("Monster_Bullet attack");
         
     }
 

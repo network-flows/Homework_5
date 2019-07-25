@@ -17,8 +17,6 @@ export default class Hero_Bullet_normal extends Hero_Bullet {
     }
 
     attack(enemy) {
-        console.log("Hero_Bullet_normal attack");
-
         enemy.get_harm(20);
     }
 

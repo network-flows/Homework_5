@@ -12,18 +12,19 @@ export default class Gunner extends Monster{
         this.v_max = 3;
         
         // set picture
-        this.loadImage("orz.jpg");
+        this.ani = new Laya.Animation();
+        this.ani.interval=100;
+        this.ani.pivot(this.width/2,this.height/2);
     }
 
     skill(){
         let new_bullet = Laya.Pool.getItemByClass("Monster_Bullet_normal", Monster_Bullet_normal);
         new_bullet.root_reset();
         new_bullet.init(this);
-
-        console.log("shoot!")
     }
 
     leaf_reset(){
+        console.log("g new")
         this.HP = 100;
     }
 }

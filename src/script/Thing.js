@@ -7,8 +7,8 @@ export default class Thing extends Beings{
     }
 
     dead(){
-        Thing_list.splice(Bullet_list.indexOf(this), 1);
-
+        Thing_list.splice(Thing_list.indexOf(this), 1);
+        console.log("splice thing")
     }
 
     use_it(){
@@ -16,9 +16,8 @@ export default class Thing extends Beings{
     }
 
     branch_reset(){
-        console.log("branch_reset!")
         Thing_list.push(this)
-
+        this.HP=1;
         this.leaf_reset()
     }
 }

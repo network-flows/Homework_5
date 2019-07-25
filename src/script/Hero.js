@@ -7,7 +7,7 @@ import Gun_normal from "./Gun_normal"
 export default class Hero extends Beings{
     constructor(){
         super();
-        
+        this.Type = "Hero";
         // move
         this.v_max = 5;
 
@@ -20,15 +20,12 @@ export default class Hero extends Beings{
 
         // shoot
         this.shoot_power = 0;
-        this.shoot_waiting = false;
 
+        // 
         this.size(32,48);
-        Laya.Animation.createFrames(this.getURLs("hero/left",4),"hero_left");
-        Laya.Animation.createFrames(this.getURLs("hero/right",4),"hero_right");
         this.ani = new Laya.Animation();
         this.ani.interval=100;
         this.ani.pivot(this.width/2,this.height/2);
-
         this.nearest_thing = null;
     }
 
@@ -57,11 +54,13 @@ export default class Hero extends Beings{
         this.checkitem();
 
         // using goods
+        if(the_screen.getShoot())console.log("getshoot1")
         if(this.nearest_thing !== null && this.get_distance(this.nearest_thing) < 50){
             the_screen.setPicture("pick");
             the_screen.setText(this.nearest_thing.sentence);
 
             if(the_screen.getShoot()){
+                console.log("getshoot2")
                 this.nearest_thing.use_it();
             }
             if(this.shoot_power < 0){
@@ -103,7 +102,6 @@ export default class Hero extends Beings{
         }
         
         let dir=this.getDir(this.direction_x,this.direction_y,this.pre_dir);
-        this.ani.pos(this.x,this.y)
         if(dir!=this.pre_dir)
         {
             this.ani.play(0,true,"hero_"+dir);
@@ -131,7 +129,6 @@ export default class Hero extends Beings{
     }
 
     shooting_sound(){
-        console.log("播放音效");
 		Laya.SoundManager.playSound("res/sounds/shooting.mp3", 1, new Laya.Handler(this, this.onComplete));
     }
 
@@ -203,16 +200,10 @@ export default class Hero extends Beings{
     branch_reset(){
         this.HP = this.HP_max;
         this.armor = this.armor_max;
-        Laya.stage.addChild(this.ani);
-
-        this.ani.pos(this.x,this.y)
-        
-        this.ani.index=1;
-        this.ani.play(0,true,"hero_right");
-
         this.main_gun = new Laya.Pool.getItemByClass('Gun_normal', Gun_normal);
         this.main_gun.root_reset();
         this.alternate_gun = null;
+        this.ani.play(0,true,"hero_right")
         this.pre_dir="right"
     }
 }
