@@ -120,6 +120,25 @@ export default class Hero extends Beings{
         }
     }
 
+    checkitem(){
+        let min_distance = 1E6;
+        let nearest_thing = null;
+        for(let the_thing of Thing_list){
+            if(this.get_distance(the_thing) < min_distance){
+                min_distance = this.get_distance(the_thing);
+                nearest_thing = the_thing;
+            }
+        }
+        
+        // exist
+        if(nearest_thing !== null){
+            the_screen.setText(nearest_thing.sentence);
+        }
+        else{
+            the_screen.setText();
+        }
+    }
+
     get_harm(value){
         if(this.armor >= value){
             this.armor -= value;

@@ -8,11 +8,6 @@ export default class Monster_Bullet extends Bullet{
     
     get_attack_list(){
         let attack_list = [];
-        for(let the_wall of Wall_list){
-            if(this.attackable(the_wall)){
-                attack_list.push(the_wall);
-            }
-        }
         if(this.attackable(the_Hero)){
             attack_list.push(the_Hero);
         }

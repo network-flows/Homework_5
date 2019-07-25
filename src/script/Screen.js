@@ -20,7 +20,7 @@ export default class Screen extends Laya.Sprite  //screen
 		this.loadMap();
 		
 		this.time_count = 0;
-		this.time_interval = 400;
+		this.time_interval = 800;
 	}
 
 	loadMap() {
@@ -72,7 +72,10 @@ export default class Screen extends Laya.Sprite  //screen
 
 	onFrame() {
 		if(this.time_count % this.time_interval == 0){
-			this.generate_monster()
+			this.generate_monster();
+			if(this.time_interval > 20){
+				this.time_interval -= 20;
+			}
 		}
 		this.time_count += 1;
 
@@ -81,9 +84,6 @@ export default class Screen extends Laya.Sprite  //screen
 		}
 		for (let the_bullet of Bullet_list) {
 			the_bullet.up_date();
-		}
-		for (let the_wall of Wall_list) {
-			the_wall.up_date();
 		}
 		for (let the_thing of Thing_list) {
 			the_thing.up_date();
@@ -134,9 +134,10 @@ export default class Screen extends Laya.Sprite  //screen
 
 	getPass(mapX, mapY) {
 		const a = this.tiledMap.getLayerByIndex(0).getTileData(Math.floor(mapX / 32),  Math.floor(mapY / 32));
-		if(this.tiledMap._jsonData.tilesets[0].tiles[a - 1]===undefined)
-		console.log(Math.floor(mapX / 32)+","+  Math.floor(mapY / 32)+"!!!"+a);
-		let ans = this.tiledMap._jsonData.tilesets[0].tiles[a - 1].properties[0].value;
-		return ans
+		if(this.tiledMap._jsonData.tilesets[0].tiles[a - 1]!==undefined){
+			return  this.tiledMap._jsonData.tilesets[0].tiles[a - 1].properties[0].value;
+		}
+
+		return false
 	}
 }

@@ -13,11 +13,6 @@ export default class Hero_Bullet extends Bullet{
                 attack_list.push(the_monster);
             }
         }
-        for(let the_wall of Wall_list){
-            if(this.attackable(the_wall)){
-                attack_list.push(the_wall);
-            }
-        }
         return attack_list;
     }
 

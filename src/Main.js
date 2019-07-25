@@ -7,7 +7,6 @@ import Thing from "./script/Thing"
 import Hero_Bullet from "./script/Hero_Bullet"
 import Monster_Bullet from "./script/Monster_Bullet"
 import Gate from "./script/Gate"
-import Wall from "./script/Wall"
 import Screen from "./script/Screen"
 import DragPoint from "./script/DragPoint"
 import Wheel from "./script/Wheel"
@@ -36,6 +35,12 @@ Laya.stage.scaleMode = Stage.SCALE_SHOWALL;
 //背景颜色
 Laya.stage.bgColor = "#232628";
 
+// 角色容器
+window.Monster_list = [];
+window.Bullet_list = [];
+window.Wall_list = [];
+window.Thing_list = [];
+
 // set the Screen
 let w = Browser.clientWidth;
 let h = Browser.clientHeight;
@@ -46,9 +51,3 @@ Laya.stage.alignH = Stage.ALIGN_CENTER;
 Stat.show();
 
 window.the_screen = new Screen(w, h);
-
-// 角色容器
-window.Monster_list = [];
-window.Bullet_list = [];
-window.Wall_list = [];
-window.Thing_list = [];

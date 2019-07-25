@@ -24,6 +24,6 @@ export default class Gunner extends Monster{
     }
 
     leaf_reset(){
-        this.HP = 300;
+        this.HP = 100;
     }
 }
