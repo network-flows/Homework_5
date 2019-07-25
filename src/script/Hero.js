@@ -19,6 +19,7 @@ export default class Hero extends Beings{
 
         // shoot
         this.shoot_power = 0;
+        this.shoot_waiting = false;
 
         this.size(32,48);
         Laya.Animation.createFrames(this.getURLs("hero/left",4),"hero_left");
@@ -26,6 +27,8 @@ export default class Hero extends Beings{
         this.ani = new Laya.Animation();
         this.ani.interval=100;
         this.ani.pivot(this.width/2,this.height/2);
+
+        this.nearest_thing = null;
     }
 
     action(){
@@ -35,19 +38,44 @@ export default class Hero extends Beings{
         let v=this.dl(vx,vy);
         this.move_by_dx_dy(vx * this.v_max, vy * this.v_max);
 
-        // Shooting delay
-        if(the_screen.getShoot())   // shoot button clicked
-        {
-            this.shoot_power += 1;
+        // Shooting and using goods
+
+        // get nearest_thing
+        this.checkitem();
+
+        // using goods
+        if(this.nearest_thing !== null && this.get_distance(this.nearest_thing) < 50){
+            the_screen.setPicture(2);
+            the_screen.setText(this.nearest_thing.sentence);
+
+            if(the_screen.getShoot()){
+                this.nearest_thing.use_it();
+            }
+            if(this.shoot_power < 0){
+                this.shoot_power += 1;
+            }
+            else{
+                this.shoot_power = 0;
+            }
         }
-        else if(this.shoot_power != 0)
-        {
-            this.shoot_power += 1;
-        }
-        if(this.shoot_power >= this.main_gun.first_waiting)
-        {
-            this.shoot_event();
-            this.shoot_power = -this.main_gun.second_waiting;
+        // shooting
+        else{
+            the_screen.setPicture(1);
+            the_screen.setText();
+
+            if(the_screen.getShoot())   // shoot button clicked
+            {
+                this.shoot_power += 1;
+            }
+            else if(this.shoot_power != 0)
+            {
+                this.shoot_power += 1;
+            }
+            if(this.shoot_power >= this.main_gun.first_waiting)
+            {
+                this.shoot_event();
+                this.shoot_power = -this.main_gun.second_waiting;
+            }
         }
 
         // get orientation
@@ -68,7 +96,6 @@ export default class Hero extends Beings{
             this.ani.play(0,true,"hero_"+dir);
             this.pre_dir=dir;
         }
-        // console.log(this.mapX,this.mapY);
 
         if(this.direction_x>=0)
         {
@@ -121,6 +148,7 @@ export default class Hero extends Beings{
     }
 
     checkitem(){
+        console.log(1);
         let min_distance = 1E6;
         let nearest_thing = null;
         for(let the_thing of Thing_list){
@@ -132,11 +160,13 @@ export default class Hero extends Beings{
         
         // exist
         if(nearest_thing !== null){
-            the_screen.setText(nearest_thing.sentence);
+            this.nearest_thing = nearest_thing;
         }
         else{
-            the_screen.setText();
+            this.nearest_thing = null;
         }
+        console.log(2);
+
     }
 
     get_harm(value){

@@ -3,6 +3,8 @@ import Wheel from "./Wheel"
 import Hero from "./hero"
 import Goblin from "./Goblin"
 import Gunner from "./Gunner"
+import Gate from "./Gate"
+
 
 export default class Screen extends Laya.Sprite  //screen
 {
@@ -48,6 +50,9 @@ export default class Screen extends Laya.Sprite  //screen
 
 		window.the_Hero = Laya.Pool.getItemByClass("Hero", Hero);
 		the_Hero.root_reset();
+
+		let a_gate = Laya.Pool.getItemByClass("Gate", Gate);
+		a_gate.root_reset();
 
 		// test
 		Laya.timer.frameLoop(1, this, this.onFrame);
@@ -139,5 +144,17 @@ export default class Screen extends Laya.Sprite  //screen
 		}
 
 		return false
+	}
+
+	setPicture(the_number){
+
+	}
+
+	setText(the_string){
+
+	}
+
+	map_change(){
+		
 	}
 }
