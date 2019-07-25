@@ -20,11 +20,9 @@ export default class God extends Thing{
     use_it(){
         // go to next floor
         this.sentence = "请选择一扇门，左边是天堂，右边是地狱"
-        console.log(this.Type)
     }
 
     dead(){
-        console.log("god die")
         this.ani.visible=false;
         Laya.stage.removeChild(this.ani);
         Thing_list.splice(Thing_list.indexOf(this), 1);

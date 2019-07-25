@@ -3,6 +3,7 @@ import Bullet from "./Bullet";
 import Monster from "./Monster";
 import Hero_Bullet_normal from "./Hero_Bullet_normal";
 import Gun_normal from "./Gun_normal"
+import Shotgun from "./Shotgun"
 
 export default class Hero extends Beings{
     constructor(){
@@ -10,30 +11,46 @@ export default class Hero extends Beings{
         this.Type = "Hero";
         // move
         this.v_max = 5;
+        this.mapX = 150;
+        this.mapY = 150;
 
         // HP and armor
-        this.HP_max = 20;
-        this.HP = 20;
-        this.armor_max = 20;
-        this.armor = 20;
+        this.HP_max = 40;
+        this.HP = 40;
+        this.armor_max = 40;
+        this.armor = 40;
         this.armor_count = 0;
 
         // shoot
         this.shoot_power = 0;
 
-        // 
+        // show
         this.size(32,48);
         this.ani = new Laya.Animation();
         this.ani.interval=100;
         this.ani.pivot(this.width/2,this.height/2);
         this.nearest_thing = null;
+
+        // gun
+        this.main_gun = new Laya.Pool.getItemByClass('Shotgun', Shotgun);
+        this.main_gun.root_reset();
+        this.alternate_gun = new Laya.Pool.getItemByClass('Gun_normal', Gun_normal);;
+        this.alternate_gun.root_reset();
     }
 
     action(){
+        // change gun
+        if(the_screen.getChange()){
+            let tmp = this.main_gun;
+            this.main_gun = this.alternate_gun;
+            this.alternate_gun = tmp;
+            this.shoot_power = 0;
+        }
+
         // repair armor
         if(this.armor < this.armor_max){
             if(this.armor_count >= 60){
-                this.armor += 1;
+                this.armor += 2;
                 this.armor_count = 0;
             }
             else{
@@ -54,13 +71,11 @@ export default class Hero extends Beings{
         this.checkitem();
 
         // using goods
-        if(the_screen.getShoot())console.log("getshoot1")
         if(this.nearest_thing !== null && this.get_distance(this.nearest_thing) < 50){
             the_screen.setPicture("pick");
             the_screen.setText(this.nearest_thing.sentence);
 
             if(the_screen.getShoot()){
-                console.log("getshoot2")
                 this.nearest_thing.use_it();
             }
             if(this.shoot_power < 0){
@@ -200,9 +215,7 @@ export default class Hero extends Beings{
     branch_reset(){
         this.HP = this.HP_max;
         this.armor = this.armor_max;
-        this.main_gun = new Laya.Pool.getItemByClass('Gun_normal', Gun_normal);
-        this.main_gun.root_reset();
-        this.alternate_gun = null;
+
         this.ani.play(0,true,"hero_right")
         this.pre_dir="right"
     }

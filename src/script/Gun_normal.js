@@ -21,6 +21,11 @@ export default class Gun_normal extends Gun{
         this.bullet_type = "Hero_Bullet_normal"
     }
     
+    shoot(){
+        let new_bullet = Laya.Pool.getItemByClass(this.bullet_type, this.bullet);
+        new_bullet.root_reset();
+    }
+
     leaf_reset(){
         this.pivot(8,16);
         this.visible=true;

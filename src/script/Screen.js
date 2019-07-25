@@ -6,6 +6,7 @@ import Gunner from "./Gunner"
 import Gate from "./Gate"
 import HPWindow from "./HPWindow"
 import God from "./God"
+import Sharpshooter from "./Sharpshooter"
 
 export default class Screen extends Laya.Sprite  //screen
 {
@@ -35,6 +36,8 @@ export default class Screen extends Laya.Sprite  //screen
 		Laya.Animation.createFrames(this.getURLs("key/base",4),"key");
 		Laya.Animation.createFrames(this.getURLs("gunner/left",4),"Gunner_left");
 		Laya.Animation.createFrames(this.getURLs("gunner/right",4),"Gunner_right");
+		Laya.Animation.createFrames(this.getURLs("Sharpshooter/left",4),"Sharpshooter_left");
+		Laya.Animation.createFrames(this.getURLs("Sharpshooter/right",4),"Sharpshooter_right");
 	}
 
 	loadMap() {
@@ -57,6 +60,7 @@ export default class Screen extends Laya.Sprite  //screen
 
 		this.whl = new Wheel(this.width / 4, this.height * 3 / 4, this.width / 15, true);
 		this.atk = new Wheel(this.width * 3 / 4, this.height * 3 / 4, this.width / 15);
+		this.chg = new Wheel(this.width * 1 / 2, this.height * 3 / 4, this.width / 30);
 		this.atk.type = "shoot";
 		this.whl.zOrder = 1000;
 		this.atk.zOrder = 1001;
@@ -98,12 +102,11 @@ export default class Screen extends Laya.Sprite  //screen
 		let a_god = Laya.Pool.getItemByClass("God", God);
 		a_god.root_reset();
 
-		// 
+		// HP
 		this.HPWindow = new HPWindow()
 	}	
 
 	generate_monster(monster_amount) {
-		console.log("gene")
 		let cur_amount = 0;
 		while(cur_amount < monster_amount){
 			let new_monster = Laya.Pool.getItemByClass("Gunner", Gunner);
@@ -119,16 +122,29 @@ export default class Screen extends Laya.Sprite  //screen
 				}
 			}
 		}
+
+		cur_amount = 0;
+		let strong_monster_amount = Math.floor(monster_amount / 5);
+		while(cur_amount < strong_monster_amount){
+			let new_monster = Laya.Pool.getItemByClass("Sharpshooter", Sharpshooter);
+			new_monster.root_reset();
+			cur_amount += 1;
+			while(true){
+				let new_x = Math.random() * this.mapX_max;
+				let new_y = Math.random() * this.mapY_max;
+				if(new_monster.reachable(new_x, new_y)){
+					new_monster.mapX = new_x;
+					new_monster.mapY = new_y;
+					break;
+				}
+			}
+		}
 	}
 
 	onFrame() {
-		//console.log("------------------------want start------------------------")
-		//console.log(this.paused)
 		if(this.paused){
-			console.log("use")
 			return;
 		}
-		//console.log("------------------------real start------------------------")
 
 		// 无尽模式
 		/*
@@ -154,10 +170,7 @@ export default class Screen extends Laya.Sprite  //screen
 		the_Hero.up_date();
 		the_Hero.pos(Laya.Browser.clientWidth / 2, Laya.Browser.clientHeight / 2);
 		this.tiledMap.changeViewPort(the_Hero.mapX - Laya.Browser.clientWidth / 2, the_Hero.mapY - Laya.Browser.clientHeight / 2, Laya.Browser.clientWidth, Laya.Browser.clientHeight)
-
 		this.HPWindow.update()
-
-		//console.log("----------------------------------------------")
 	}
 
 	onMouseDown(e) {
@@ -166,6 +179,9 @@ export default class Screen extends Laya.Sprite  //screen
 		}
 		else if ((this.atk.x - e.stageX) * (this.atk.x - e.stageX) + (this.atk.y - e.stageY) * (this.atk.y - e.stageY) <= this.atk.r * this.atk.r) {
 			this.atk.onStartDrag(e);
+		}
+		else if ((this.chg.x - e.stageX) * (this.chg.x - e.stageX) + (this.chg.y - e.stageY) * (this.chg.y - e.stageY) <= this.chg.r * this.chg.r) {
+			this.chg.onStartDrag(e);
 		}
 	}
 
@@ -176,6 +192,9 @@ export default class Screen extends Laya.Sprite  //screen
 		else if (this.atk.ID == e.touchId) {
 			this.atk.onStopDrag();
 		}
+		else if (this.chg.ID == e.touchId) {
+			this.chg.onStopDrag();
+		}
 	}
 
 	onMouseMove(e) {
@@ -184,6 +203,9 @@ export default class Screen extends Laya.Sprite  //screen
 		}
 		else if (this.atk.ID == e.touchId) {
 			this.atk.moveTo(e.stageX, e.stageY);
+		}
+		else if (this.chg.ID == e.touchId) {
+			this.chg.moveTo(e.stageX, e.stageY);
 		}
 	}
 
@@ -196,6 +218,10 @@ export default class Screen extends Laya.Sprite  //screen
 
 	getShoot() {
 		return this.atk.ID !== null;
+	}
+
+	getChange() {
+		return this.chg.ID !== null;
 	}
 
 	getPass(mapX, mapY) {
@@ -236,7 +262,6 @@ export default class Screen extends Laya.Sprite  //screen
 	}
 
 	map_change() {
-		console.log("pause set true")
 		this.paused = true;
 		const number = this.number;
 		this.number += 1;
@@ -265,8 +290,8 @@ export default class Screen extends Laya.Sprite  //screen
 	}
 
 	onLoadedMap2() {
-		the_Hero.mapX = 100;
-		the_Hero.mapY = 100;
+		the_Hero.mapX = 110;
+		the_Hero.mapY = 110;
 
 		the_Hero.root_reset();
 		this.atk.type = "shoot";

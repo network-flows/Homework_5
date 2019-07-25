@@ -10,6 +10,7 @@ export default class HPWindow extends Laya.Sprite
         this.zOrder=1000;
         this.size(200,120);
     }
+    
     update()
     {
         if(this.HP!=the_Hero.HP||this.armor!=the_Hero.armor)

@@ -96,9 +96,11 @@ export default class Monster extends Beings{
     }
 
     branch_reset(){
-        Monster_list.push(this)
-        this.pre_dir="right"
-        this.ani.play(this.Type+"_right");
+        if(this.Type !== "Sharpshooter"){
+            Monster_list.push(this)
+            this.pre_dir="right"
+            this.ani.play(0, true, this.Type+"_right");
+        }
         this.leaf_reset()
     }
 

@@ -38,6 +38,7 @@ export default class Gate extends Thing{
     leaf_reset(){
         this.mapX=100;
         this.mapY=100;
+        this.difficulty = 1;
         this.ani.play(0,true,"key");
     }
 }

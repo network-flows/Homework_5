@@ -19,17 +19,8 @@ export default class Gun extends Beings{
     dead(){
 
     }
-
-    shoot(){
-        let new_bullet = Laya.Pool.getItemByClass(this.bullet_type, this.bullet);
-        new_bullet.root_reset();
-
-        console.log("shoot!")
-    }
     
     branch_reset(){
-        console.log("branch_reset!")
-
         this.leaf_reset()
     }
 }

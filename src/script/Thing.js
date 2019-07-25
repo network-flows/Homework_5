@@ -8,7 +8,6 @@ export default class Thing extends Beings{
 
     dead(){
         Thing_list.splice(Thing_list.indexOf(this), 1);
-        console.log("splice thing")
     }
 
     use_it(){

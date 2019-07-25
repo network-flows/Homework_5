@@ -26,6 +26,7 @@ export default class Beings extends Laya.Sprite {
         this.zOrder=0;
         if(this.ani)
         {
+            this.ani.visible = false;
             Laya.stage.addChild(this.ani)
         }
         this.branch_reset();
@@ -43,6 +44,9 @@ export default class Beings extends Laya.Sprite {
             this.dead_action();
         }
         else{
+            if(this.ani){
+                this.ani.visible = true;
+            }
             this.visible = true;
             this.action();
         }
@@ -204,5 +208,14 @@ export default class Beings extends Laya.Sprite {
             }
         }
         */
+    }
+    rotate_v(old_x, old_y, a){
+        let new_x = old_x * Math.cos(a) - old_y * Math.sin(a);
+        let new_y = old_x * Math.sin(a) + old_y * Math.cos(a);
+        
+        return {
+            x: new_x,
+            y: new_y
+        };
     }
 }
