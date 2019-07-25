@@ -3,7 +3,7 @@ import Hero_Bullet from "./Hero_Bullet"
 export default class Hero_Bullet_normal extends Hero_Bullet {
     constructor(vx, vy) {
         super();
-        this.v_max = 5;
+        this.v_max = 10;
         this.Type = "Hero_Bullet_normal";
 
         this.r = 20;

@@ -47,8 +47,8 @@ export default class Screen extends Laya.Sprite  //screen
 		this.whl = new Wheel(this.width / 4, this.height * 3 / 4, this.width / 15, true);
 		this.atk = new Wheel(this.width * 3 / 4, this.height * 3 / 4, this.width / 15);
 		this.atk.type = "shoot";
-		this.whl.zOrder=1000;
-		this.atk.zOrder=1001;
+		this.whl.zOrder = 1000;
+		this.atk.zOrder = 1001;
 		window.the_Hero = Laya.Pool.getItemByClass("Hero", Hero);
 		the_Hero.root_reset();
 
@@ -68,9 +68,10 @@ export default class Screen extends Laya.Sprite  //screen
 		this.dlg.font = "Impact";
 
 		// play music
-		laya.media.SoundManager.playMusic("res/sounds/BGM.mp3",0); 
+		laya.media.SoundManager.playMusic("res/sounds/BGM.mp3", 0);
 
 		// run
+		this.paused = false;
 		Laya.timer.frameLoop(1, this, this.onFrame);
 	}
 
@@ -92,6 +93,10 @@ export default class Screen extends Laya.Sprite  //screen
 	}
 
 	onFrame() {
+		if(this.paused){
+			return;
+		}
+
 		if (this.time_count % this.time_interval == 0) {
 			this.generate_monster();
 			if (this.time_interval > 20) {
@@ -192,6 +197,32 @@ export default class Screen extends Laya.Sprite  //screen
 	}
 
 	map_change() {
+		const
+			TiledMap = Laya.TiledMap,
+			Rectangle = Laya.Rectangle,
+			Handler = Laya.Handler,
+			Event = Laya.Event,
+			Browser = Laya.Browser;
 
+		for (let the_monster of Monster_list) {
+			the_monster.HP = -1;
+		}
+		for (let the_bullet of Bullet_list) {
+			the_bullet.HP = -1;
+		}
+		for (let the_thing of Thing_list) {
+			the_thing.HP = -1;
+		}
+		this.tiledMap.destroy();
+		this.tiledMap.createMap("res/tiledmaps/10.json", new Rectangle(0, 0, Browser.width, Browser.height), Handler.create(this, this.onLoadedMap2));
+		this.paused = true;
+	}
+
+	onLoadedMap2() {
+		this.atk.type = "shoot";
+		the_Hero.root_reset();
+		console.log("loadMap!")
+		this.tiledMap.changeViewPort(0, 0, Laya.Browser.clientWidth, Laya.Browser.clientHeight)
+		this.paused = false;
 	}
 }
