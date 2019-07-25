@@ -45,7 +45,7 @@ export default class Hero extends Beings{
 
         // using goods
         if(this.nearest_thing !== null && this.get_distance(this.nearest_thing) < 50){
-            the_screen.setPicture(2);
+            the_screen.setPicture("pick");
             the_screen.setText(this.nearest_thing.sentence);
 
             if(the_screen.getShoot()){
@@ -60,7 +60,7 @@ export default class Hero extends Beings{
         }
         // shooting
         else{
-            the_screen.setPicture(1);
+            the_screen.setPicture("shoot");
             the_screen.setText();
 
             if(the_screen.getShoot())   // shoot button clicked

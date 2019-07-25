@@ -20,7 +20,7 @@ export default class Screen extends Laya.Sprite  //screen
 		this.size(w, h);
 		this.pos(0, 0);
 		this.loadMap();
-		
+
 		this.time_count = 0;
 		this.time_interval = 800;
 	}
@@ -46,19 +46,35 @@ export default class Screen extends Laya.Sprite  //screen
 
 		this.whl = new Wheel(this.width / 4, this.height * 3 / 4, this.width / 15, true);
 		this.atk = new Wheel(this.width * 3 / 4, this.height * 3 / 4, this.width / 15);
-		this.atk.alpha = 0.8;
-
+		this.atk.type = "shoot";
+		this.whl.zOrder=1000;
+		this.atk.zOrder=1001;
 		window.the_Hero = Laya.Pool.getItemByClass("Hero", Hero);
 		the_Hero.root_reset();
 
 		let a_gate = Laya.Pool.getItemByClass("Gate", Gate);
 		a_gate.root_reset();
 
-		// test
+		// init text
+		this.dlg = new Laya.Text();
+		Laya.stage.addChild(this.dlg);
+		this.dlg.pos(0, 0);
+		this.dlg.size(200, 100);
+		this.dlg.pivot(100, 50);
+		this.dlg.fontSize = 20;
+		this.dlg.align = "center"
+		this.dlg.valign = "middle"
+		this.dlg.color = "#000000"
+		this.dlg.font = "Impact";
+
+		// play music
+		laya.media.SoundManager.playMusic("res/sounds/BGM.mp3",0); 
+
+		// run
 		Laya.timer.frameLoop(1, this, this.onFrame);
 	}
 
-	generate_monster(){
+	generate_monster() {
 		let monster_test1 = Laya.Pool.getItemByClass("Gunner", Gunner);
 		monster_test1.root_reset();
 		monster_test1.mapX = 500;
@@ -76,9 +92,9 @@ export default class Screen extends Laya.Sprite  //screen
 	}
 
 	onFrame() {
-		if(this.time_count % this.time_interval == 0){
+		if (this.time_count % this.time_interval == 0) {
 			this.generate_monster();
-			if(this.time_interval > 20){
+			if (this.time_interval > 20) {
 				this.time_interval -= 20;
 			}
 		}
@@ -107,7 +123,7 @@ export default class Screen extends Laya.Sprite  //screen
 			this.atk.onStartDrag(e);
 		}
 	}
-	
+
 	onMouseUp(e) {
 		if (this.whl.ID == e.touchId) {
 			this.whl.onStopDrag();
@@ -128,8 +144,8 @@ export default class Screen extends Laya.Sprite  //screen
 
 	getVelosity() {
 		return {
-			x: (this.whl.sp.x - this.whl.x)/this.whl.r,
-			y: (this.whl.sp.y - this.whl.y)/this.whl.r
+			x: (this.whl.sp.x - this.whl.x) / this.whl.r,
+			y: (this.whl.sp.y - this.whl.y) / this.whl.r
 		};
 	}
 
@@ -138,23 +154,44 @@ export default class Screen extends Laya.Sprite  //screen
 	}
 
 	getPass(mapX, mapY) {
-		const a = this.tiledMap.getLayerByIndex(0).getTileData(Math.floor(mapX / 32),  Math.floor(mapY / 32));
-		if(this.tiledMap._jsonData.tilesets[0].tiles[a - 1]!==undefined){
-			return  this.tiledMap._jsonData.tilesets[0].tiles[a - 1].properties[0].value;
+		const a = this.tiledMap.getLayerByIndex(0).getTileData(Math.floor(mapX / 32), Math.floor(mapY / 32));
+		if (this.tiledMap._jsonData.tilesets[0].tiles[a - 1] !== undefined) {
+			return this.tiledMap._jsonData.tilesets[0].tiles[a - 1].properties[0].value;
 		}
 
 		return false
 	}
 
-	setPicture(the_number){
-
+	setPicture(str) {
+		if (str == "shoot" && this.atk.type == "pick") {
+			const atk = this.atk;
+			atk.type = "shoot"
+			atk.graphics.drawCircle(atk.r, atk.r, atk.r, "#FFFF00");
+		}
+		else if (str == "pick" && this.atk.type == "shoot") {
+			const atk = this.atk;
+			atk.type = "pick"
+			atk.graphics.drawCircle(atk.r, atk.r, atk.r, "#000000");
+		}
 	}
 
-	setText(the_string){
-
+	setText(text, color, x, y, sz) {
+		if (text === undefined) text = "";
+		if (color === undefined) color = "#FFFFFF";
+		if (x == undefined || y === undefined) {
+			x = Laya.Browser.clientWidth / 2
+			y = Laya.Browser.clientHeight / 2
+		}
+		if (sz === undefined) sz = 20;
+		this.dlg.changeText(text);
+		this.dlg.color = color;
+		this.dlg.pos(x, y);
+		this.dlg.fontSize = sz;
+		this.dlg.alpha = 1;
+		//Laya.Tween.to(this.dlg,{alpha:0,y:this.dlg.y-100,fontSize:this.dlg.fontSize*2},1000)
 	}
 
-	map_change(){
-		
+	map_change() {
+
 	}
 }

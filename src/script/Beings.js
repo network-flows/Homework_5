@@ -23,7 +23,7 @@ export default class Beings extends Laya.Sprite {
         Laya.stage.addChild(this);
         this.pivot(this.width / 2, this.height /2)
         console.log("root_reset!")
-
+        this.zOrder=0;
         this.branch_reset();
     }
 
