@@ -21,7 +21,7 @@ export default class Monster_Bullet_normal extends Monster_Bullet {
     attack(enemy) {
         console.log("Monster_Bullet_normal attack");
 
-        enemy.get_harm(10);
+        enemy.get_harm(5);
     }
 
     leaf_reset() {

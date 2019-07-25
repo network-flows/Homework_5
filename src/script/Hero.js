@@ -12,10 +12,11 @@ export default class Hero extends Beings{
         this.v_max = 5;
 
         // HP and armor
-        this.HP_max = 100;
-        this.HP = 100;
-        this.armor_max = 10;
-        this.armot = 10;
+        this.HP_max = 20;
+        this.HP = 20;
+        this.armor_max = 20;
+        this.armor = 20;
+        this.armor_count = 0;
 
         // shoot
         this.shoot_power = 0;
@@ -32,13 +33,25 @@ export default class Hero extends Beings{
     }
 
     action(){
+        // repair armor
+        if(this.armor < this.armor_max){
+            if(this.armor_count >= 60){
+                this.armor += 1;
+                this.armor_count = 0;
+            }
+            else{
+                this.armor_count += 1;
+            }
+        }
+
         //--------- movement control part ---------//
         let vx = the_screen.getVelosity().x;
         let vy = the_screen.getVelosity().y;
         let v=this.dl(vx,vy);
         this.move_by_dx_dy(vx * this.v_max, vy * this.v_max);
+        //--------- movement control part end ---------//
 
-        // Shooting and using goods
+        //--------- Shooting and using goods ---------//
 
         // get nearest_thing
         this.checkitem();
@@ -109,7 +122,7 @@ export default class Hero extends Beings{
             let arg=270-Math.atan2(this.direction_x,this.direction_y)/Math.PI*180;
             this.main_gun.rotation=arg;
         }
-        //--------- shoot control part end ---------//
+        //--------- Shooting and using goods end ---------//
     }
 
     shoot_event(){
@@ -148,7 +161,6 @@ export default class Hero extends Beings{
     }
 
     checkitem(){
-        console.log(1);
         let min_distance = 1E6;
         let nearest_thing = null;
         for(let the_thing of Thing_list){
@@ -165,11 +177,14 @@ export default class Hero extends Beings{
         else{
             this.nearest_thing = null;
         }
-        console.log(2);
-
     }
 
     get_harm(value){
+        this.armor_count = 0;
+        if(this.HP < 1){
+            return;
+        }
+
         if(this.armor >= value){
             this.armor -= value;
         }

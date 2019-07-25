@@ -1,4 +1,5 @@
 import Beings from "./Beings"
+import Gate from "./Gate"
 
 export default class Monster extends Beings{
     constructor(){
@@ -82,7 +83,10 @@ export default class Monster extends Beings{
     
     dead(){
         Monster_list.splice(Monster_list.indexOf(this), 1);
-
+        if(Monster_list.length == 0){
+            let a_gate = Laya.Pool.getItemByClass("Gate", Gate);
+            a_gate.root_reset();
+        }
     }
 
     branch_reset(){

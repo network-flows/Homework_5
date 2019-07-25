@@ -4,7 +4,7 @@ import Hero from "./hero"
 import Goblin from "./Goblin"
 import Gunner from "./Gunner"
 import Gate from "./Gate"
-
+import HPWindow from "./HPWindow"
 
 export default class Screen extends Laya.Sprite  //screen
 {
@@ -21,8 +21,13 @@ export default class Screen extends Laya.Sprite  //screen
 		this.pos(0, 0);
 		this.loadMap();
 
+		this.number = 0;
+
 		this.time_count = 0;
 		this.time_interval = 800;
+
+		this.mapX_max = 1000;
+		this.mapY_max = 1000;
 	}
 
 	loadMap() {
@@ -33,7 +38,7 @@ export default class Screen extends Laya.Sprite  //screen
 			Event = Laya.Event,
 			Browser = Laya.Browser;
 		this.tiledMap = new TiledMap();
-		this.tiledMap.createMap("res/tiledmaps/00.json", new Rectangle(0, 0, Browser.width, Browser.height), Handler.create(this, this.onLoadedMap));
+		this.tiledMap.createMap("res/tiledmaps/start.json", new Rectangle(0, 0, Browser.width, Browser.height), Handler.create(this, this.onLoadedMap));
 	}
 
 	onLoadedMap() {
@@ -52,9 +57,6 @@ export default class Screen extends Laya.Sprite  //screen
 		window.the_Hero = Laya.Pool.getItemByClass("Hero", Hero);
 		the_Hero.root_reset();
 
-		let a_gate = Laya.Pool.getItemByClass("Gate", Gate);
-		a_gate.root_reset();
-
 		// init text
 		this.dlg = new Laya.Text();
 		Laya.stage.addChild(this.dlg);
@@ -66,6 +68,7 @@ export default class Screen extends Laya.Sprite  //screen
 		this.dlg.valign = "middle"
 		this.dlg.color = "#000000"
 		this.dlg.font = "Impact";
+		this.dlg.zOrder = 1000;
 
 		// play music
 		laya.media.SoundManager.playMusic("res/sounds/BGM.mp3", 0);
@@ -73,23 +76,32 @@ export default class Screen extends Laya.Sprite  //screen
 		// run
 		this.paused = false;
 		Laya.timer.frameLoop(1, this, this.onFrame);
-	}
 
-	generate_monster() {
-		let monster_test1 = Laya.Pool.getItemByClass("Gunner", Gunner);
-		monster_test1.root_reset();
-		monster_test1.mapX = 500;
-		monster_test1.mapY = 500;
+		// start gate
+		let a_gate = Laya.Pool.getItemByClass("Gate", Gate);
+		a_gate.root_reset();
 
-		let monster_test2 = Laya.Pool.getItemByClass("Gunner", Gunner);
-		monster_test2.root_reset();
-		monster_test2.mapX = 400;
-		monster_test2.mapY = 500;
+		// 
+		this.HPWindow = new HPWindow()
+	}	
 
-		let monster_test3 = Laya.Pool.getItemByClass("Gunner", Gunner);
-		monster_test3.root_reset();
-		monster_test3.mapX = 500;
-		monster_test3.mapY = 400;
+	generate_monster(monster_amount) {
+		let cur_amount = 0;
+		while(cur_amount < monster_amount){
+			let new_monster = Laya.Pool.getItemByClass("Gunner", Gunner);
+			new_monster.root_reset();
+			cur_amount += 1;
+			while(true){
+				let new_x = Math.random() * this.mapX_max;
+				let new_y = Math.random() * this.mapY_max;
+				if(new_monster.reachable(new_x, new_y)){
+					new_monster.mapX = new_x;
+					new_monster.mapY = new_y;
+					console.log("monster at "+new_monster.mapX+","+new_monster.mapY)
+					break;
+				}
+			}
+		}
 	}
 
 	onFrame() {
@@ -97,6 +109,8 @@ export default class Screen extends Laya.Sprite  //screen
 			return;
 		}
 
+		// 无尽模式
+		/*
 		if (this.time_count % this.time_interval == 0) {
 			this.generate_monster();
 			if (this.time_interval > 20) {
@@ -104,6 +118,7 @@ export default class Screen extends Laya.Sprite  //screen
 			}
 		}
 		this.time_count += 1;
+		*/
 
 		for (let the_monster of Monster_list) {
 			the_monster.up_date();
@@ -118,6 +133,8 @@ export default class Screen extends Laya.Sprite  //screen
 		the_Hero.up_date();
 		the_Hero.pos(Laya.Browser.clientWidth / 2, Laya.Browser.clientHeight / 2);
 		this.tiledMap.changeViewPort(the_Hero.mapX - Laya.Browser.clientWidth / 2, the_Hero.mapY - Laya.Browser.clientHeight / 2, Laya.Browser.clientWidth, Laya.Browser.clientHeight)
+
+		this.HPWindow.update()
 	}
 
 	onMouseDown(e) {
@@ -197,6 +214,11 @@ export default class Screen extends Laya.Sprite  //screen
 	}
 
 	map_change() {
+		const number = this.number;
+		this.number += 1;
+		
+		let bg = Math.floor(number/15);
+		let idx = number%2;
 		const
 			TiledMap = Laya.TiledMap,
 			Rectangle = Laya.Rectangle,
@@ -214,7 +236,7 @@ export default class Screen extends Laya.Sprite  //screen
 			the_thing.HP = -1;
 		}
 		this.tiledMap.destroy();
-		this.tiledMap.createMap("res/tiledmaps/10.json", new Rectangle(0, 0, Browser.width, Browser.height), Handler.create(this, this.onLoadedMap2));
+		this.tiledMap.createMap("res/tiledmaps/"+bg+idx+".json", new Rectangle(0, 0, Browser.width, Browser.height), Handler.create(this, this.onLoadedMap2));
 		this.paused = true;
 	}
 
@@ -224,5 +246,6 @@ export default class Screen extends Laya.Sprite  //screen
 		console.log("loadMap!")
 		this.tiledMap.changeViewPort(0, 0, Laya.Browser.clientWidth, Laya.Browser.clientHeight)
 		this.paused = false;
+		this.generate_monster(this.number * 1)
 	}
 }
