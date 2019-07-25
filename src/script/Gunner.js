@@ -12,7 +12,7 @@ export default class Gunner extends Monster{
         this.v_max = 3;
         
         // set picture
-        this.loadImage("./orz.jpg");
+        this.loadImage("orz.jpg");
     }
 
     skill(){

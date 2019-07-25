@@ -35,10 +35,10 @@ export default class Monster extends Beings{
         let fx = 0;
         let fy = 0;
 
-        if(Math.abs(dx) > 1E-6){
+        if(Math.abs(dx) > 1E-2){
             fx = 1 / dx;
         }
-        if(Math.abs(dy) > 1E-6){
+        if(Math.abs(dy) > 1E-2){
             fy = 1 / dy;
         }
 

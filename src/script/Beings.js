@@ -16,7 +16,7 @@ export default class Beings extends Laya.Sprite {
         this.direction_x = 1;
         this.direction_y = 1;
 
-        this.m = 0.1;
+        this.m = 0.01;
     }
 
     root_reset(){
@@ -95,7 +95,7 @@ export default class Beings extends Laya.Sprite {
         let urls=[];
         for(var i =0;i<n;i+=1)
         {
-            urls.push("res\\atlas\\"+str+i+".png")
+            urls.push("res/atlas/"+str+i+".png")
         }
         return urls;
     }
@@ -126,6 +126,13 @@ export default class Beings extends Laya.Sprite {
     }
 
     move_by_dx_dy(dx, dy){
+        if(dx > 30){
+            dx = 30;
+        }
+        if(dy > 30){
+            dy = 30;
+        }
+
         if(this.reachable(this.mapX + dx, this.mapY)){
             this.mapX += dx;
         }

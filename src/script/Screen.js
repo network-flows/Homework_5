@@ -18,6 +18,9 @@ export default class Screen extends Laya.Sprite  //screen
 		this.size(w, h);
 		this.pos(0, 0);
 		this.loadMap();
+		
+		this.time_count = 0;
+		this.time_interval = 400;
 	}
 
 	loadMap() {
@@ -28,7 +31,7 @@ export default class Screen extends Laya.Sprite  //screen
 			Event = Laya.Event,
 			Browser = Laya.Browser;
 		this.tiledMap = new TiledMap();
-		this.tiledMap.createMap("res\\tiledmaps\\00.json", new Rectangle(0, 0, Browser.width, Browser.height), Handler.create(this, this.onLoadedMap));
+		this.tiledMap.createMap("res/tiledmaps/00.json", new Rectangle(0, 0, Browser.width, Browser.height), Handler.create(this, this.onLoadedMap));
 	}
 
 	onLoadedMap() {
@@ -46,6 +49,11 @@ export default class Screen extends Laya.Sprite  //screen
 		window.the_Hero = Laya.Pool.getItemByClass("Hero", Hero);
 		the_Hero.root_reset();
 
+		// test
+		Laya.timer.frameLoop(1, this, this.onFrame);
+	}
+
+	generate_monster(){
 		let monster_test1 = Laya.Pool.getItemByClass("Gunner", Gunner);
 		monster_test1.root_reset();
 		monster_test1.mapX = 500;
@@ -60,11 +68,14 @@ export default class Screen extends Laya.Sprite  //screen
 		monster_test3.root_reset();
 		monster_test3.mapX = 500;
 		monster_test3.mapY = 400;
-		// test
-		Laya.timer.frameLoop(1, this, this.onFrame);
 	}
 
 	onFrame() {
+		if(this.time_count % this.time_interval == 0){
+			this.generate_monster()
+		}
+		this.time_count += 1;
+
 		for (let the_monster of Monster_list) {
 			the_monster.up_date();
 		}
@@ -91,6 +102,7 @@ export default class Screen extends Laya.Sprite  //screen
 			this.atk.onStartDrag(e);
 		}
 	}
+	
 	onMouseUp(e) {
 		if (this.whl.ID == e.touchId) {
 			this.whl.onStopDrag();
@@ -99,6 +111,7 @@ export default class Screen extends Laya.Sprite  //screen
 			this.atk.onStopDrag();
 		}
 	}
+
 	onMouseMove(e) {
 		if (this.whl.ID == e.touchId) {
 			this.whl.moveTo(e.stageX, e.stageY);
@@ -121,6 +134,8 @@ export default class Screen extends Laya.Sprite  //screen
 
 	getPass(mapX, mapY) {
 		const a = this.tiledMap.getLayerByIndex(0).getTileData(Math.floor(mapX / 32),  Math.floor(mapY / 32));
+		if(this.tiledMap._jsonData.tilesets[0].tiles[a - 1]===undefined)
+		console.log(Math.floor(mapX / 32)+","+  Math.floor(mapY / 32)+"!!!"+a);
 		let ans = this.tiledMap._jsonData.tilesets[0].tiles[a - 1].properties[0].value;
 		return ans
 	}
