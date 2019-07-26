@@ -44,6 +44,7 @@ export default class Screen extends Laya.Sprite  //screen
 		Laya.Animation.createFrames(this.getURLs("wizard/right",4),"wizard_right");
 		Laya.Animation.createFrames(this.getURLs("Charizard/left",4),"Charizard_left");
 		Laya.Animation.createFrames(this.getURLs("Charizard/right",4),"Charizard_right");
+		Laya.Animation.createFrames(this.getURLs("god/down",3),"god_down");
 	}
 
 	loadMap() {
@@ -129,6 +130,13 @@ export default class Screen extends Laya.Sprite  //screen
 
 		// HP
 		this.HPWindow = new HPWindow()
+		let L=10;
+		/*
+		this.tinyArrow=new Laya.Sprite();
+		this.tinyArrow.graphics.drawPoly(0,0,[-L,0,L,0,0,L]);
+		this.tinyArrow.alpha=0.5;
+		this.tinyArrow.visible=true;
+		this.tinyArrow.pos(Laya.Browser.clientWidth/2,Laya.Browser.clientHeight/2);*/
 	}	
 
 	generate_monster(monster_amount) {

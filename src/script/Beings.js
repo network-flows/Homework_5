@@ -106,15 +106,6 @@ export default class Beings extends Laya.Sprite {
         }
     }
 
-    getURLs(str,n)
-    {
-        let urls=[];
-        for(var i =0;i<n;i+=1)
-        {
-            urls.push("res/atlas/"+str+i+".png")
-        }
-        return urls;
-    }
     getDir(dx,dy,last){
         if(dx>0)return "right";
         if(-dx>0)return "left";

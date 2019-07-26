@@ -25,7 +25,7 @@ export default class Hero extends Beings{
         this.shoot_power = 0;
 
         // show
-        this.size(32,48);
+        this.size(48,48);
         this.ani = new Laya.Animation();
         this.ani.interval=100;
         this.ani.pivot(this.width/2,this.height/2);
