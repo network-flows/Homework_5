@@ -9,7 +9,7 @@ export default class Monster_Bullet_normal extends Monster_Bullet {
         this.vy = vy;
 
         // set picture
-        this.r = 20;
+        this.r = 10;
         this.graphics.drawCircle(0, 0, this.r, "#FFFF00");
         this.filters = [new Laya.GlowFilter("#FFFFFF", 10, 0, 0)];
     }

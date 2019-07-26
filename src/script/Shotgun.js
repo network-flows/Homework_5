@@ -1,5 +1,5 @@
 import Beings from "./Beings"
-import Hero_Bullet_normal from "./Hero_Bullet_normal"
+import Hero_Bullet_huge from "./Hero_Bullet_huge"
 import Gun from "./Gun"
 
 export default class Shotgun extends Gun{
@@ -15,8 +15,8 @@ export default class Shotgun extends Gun{
         Laya.stage.addChild(this);
         this.size(32,32);
         this.pos(Laya.Browser.clientWidth/2, Laya.Browser.clientHeight/2);
-        this.bullet = Hero_Bullet_normal;
-        this.bullet_type = "Hero_Bullet_normal"
+        this.bullet = Hero_Bullet_huge;
+        this.bullet_type = "Hero_Bullet_huge"
     }
 
     shoot(){

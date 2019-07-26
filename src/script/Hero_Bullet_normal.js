@@ -8,8 +8,8 @@ export default class Hero_Bullet_normal extends Hero_Bullet {
 
         this.r = 20;
         this.size(this.r*2,this.r*2)
-        this.graphics.drawCircle(this.r, this.r, this.r, "#BBFFBB");
-        this.filters = [new Laya.GlowFilter("#FFFFFF", 10, 0, 0)];
+        this.graphics.drawCircle(this.r, this.r, this.r, "#B1F3BB");
+        this.filters = [new Laya.GlowFilter("#F1FF5F", 10, 0, 0)];
     }
 
     attackable(the_enemy) {
@@ -23,7 +23,7 @@ export default class Hero_Bullet_normal extends Hero_Bullet {
     leaf_reset() {
         this.HP = 50;
 
-        this.rotation=-Math.atan2(the_Hero.direction_x,the_Hero.direction_y)/Math.PI*180;
-        this.filters = [new Laya.GlowFilter("#FFFFFF", 5, 0, 0)];
+        //this.rotation=-Math.atan2(the_Hero.direction_x,the_Hero.direction_y)/Math.PI*180;
+        //this.filters = [new Laya.GlowFilter("#FFFFFF", 5, 0, 0)];
     }
 }

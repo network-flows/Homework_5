@@ -7,7 +7,7 @@ export default class Sharpshooter extends Monster{
         this.Type = "Sharpshooter";
 
         this.size(48,48)
-        this.range = 20 * 40;
+        this.range = 10 * 40;
         this.v_max = 3;
 
         // set picture
