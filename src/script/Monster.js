@@ -93,6 +93,7 @@ export default class Monster extends Beings{
         if(Monster_list.length == 0){
             let a_gate = Laya.Pool.getItemByClass("Gate", Gate);
             a_gate.root_reset();
+            a_gate.placeRandomly();
         }
 
         // add score

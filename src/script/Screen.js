@@ -33,17 +33,17 @@ export default class Screen extends Laya.Sprite  //screen
 
 		this.mapX_max = 1000;
 		this.mapY_max = 1000;
-		Laya.Animation.createFrames(this.getURLs("hero/left",4),"hero_left");
-		Laya.Animation.createFrames(this.getURLs("hero/right",4),"hero_right");
-		Laya.Animation.createFrames(this.getURLs("key/base",4),"key");
-		Laya.Animation.createFrames(this.getURLs("gunner/left",4),"Gunner_left");
-		Laya.Animation.createFrames(this.getURLs("gunner/right",4),"Gunner_right");
-		Laya.Animation.createFrames(this.getURLs("Sharpshooter/left",4),"Sharpshooter_left");
-		Laya.Animation.createFrames(this.getURLs("Sharpshooter/right",4),"Sharpshooter_right");
-		Laya.Animation.createFrames(this.getURLs("wizard/left",4),"wizard_left");
-		Laya.Animation.createFrames(this.getURLs("wizard/right",4),"wizard_right");
-		Laya.Animation.createFrames(this.getURLs("Charizard/left",4),"Charizard_left");
-		Laya.Animation.createFrames(this.getURLs("Charizard/right",4),"Charizard_right");
+		Laya.Animation.createFrames(this.getURLs("hero/left", 4), "hero_left");
+		Laya.Animation.createFrames(this.getURLs("hero/right", 4), "hero_right");
+		Laya.Animation.createFrames(this.getURLs("key/base", 4), "key");
+		Laya.Animation.createFrames(this.getURLs("gunner/left", 4), "Gunner_left");
+		Laya.Animation.createFrames(this.getURLs("gunner/right", 4), "Gunner_right");
+		Laya.Animation.createFrames(this.getURLs("Sharpshooter/left", 4), "Sharpshooter_left");
+		Laya.Animation.createFrames(this.getURLs("Sharpshooter/right", 4), "Sharpshooter_right");
+		Laya.Animation.createFrames(this.getURLs("wizard/left", 4), "wizard_left");
+		Laya.Animation.createFrames(this.getURLs("wizard/right", 4), "wizard_right");
+		Laya.Animation.createFrames(this.getURLs("Charizard/left", 4), "Charizard_left");
+		Laya.Animation.createFrames(this.getURLs("Charizard/right", 4), "Charizard_right");
 
 		this.score = 0;
 	}
@@ -68,7 +68,7 @@ export default class Screen extends Laya.Sprite  //screen
 
 		this.whl = new Wheel(this.width / 4, this.height * 3 / 4, this.width / 15, true);
 		this.atk = new Wheel(this.width * 3 / 4, this.height * 3 / 4, this.width / 15);
-		this.chg = new Wheel(this.width * 0.83, this.height *0.55, this.width / 30);
+		this.chg = new Wheel(this.width * 0.83, this.height * 0.55, this.width / 30);
 		this.setPicture("pick");
 		this.setPicture("shoot");
 		this.whl.loadImage("res/atlas/wheels/whl.png")
@@ -76,7 +76,7 @@ export default class Screen extends Laya.Sprite  //screen
 		this.whl.zOrder = 1000;
 		this.atk.zOrder = 1001;
 		this.chg.zOrder = 1002;
-		this.whl.sp.zOrder=1003;
+		this.whl.sp.zOrder = 1003;
 
 		window.the_Hero = Laya.Pool.getItemByClass("Hero", Hero);
 		the_Hero.root_reset();
@@ -94,9 +94,9 @@ export default class Screen extends Laya.Sprite  //screen
 		this.dlg.font = "Impact";
 		this.dlg.zOrder = 1000;
 
-		this.score_Window=new Laya.Text();
+		this.score_Window = new Laya.Text();
 		Laya.stage.addChild(this.score_Window);
-		this.score_Window.pos(Laya.Browser.clientWidth/2,40);
+		this.score_Window.pos(Laya.Browser.clientWidth / 2, 40);
 		this.score_Window.size(200, 100);
 		this.score_Window.pivot(100, 50);
 		this.score_Window.fontSize = 20;
@@ -130,47 +130,70 @@ export default class Screen extends Laya.Sprite  //screen
 
 		// HP
 		this.HPWindow = new HPWindow()
-	}	
 
-	generate_monster(monster_amount) {
+		// tiny arrow
+		let L = 10;
+		this.tinyArrow = new Laya.Sprite();
+		Laya.stage.addChild(this.tinyArrow);
+		this.tinyArrow.loadImage("res/atlas/wheels/arrow.png")
+		this.tinyArrow.alpha = 0.9;
+		this.tinyArrow.visible = true;
+		this.tinyArrow.pos(Laya.Browser.clientWidth / 2, Laya.Browser.clientHeight / 2);
+		this.tinyArrow.pivot(16, 40);
+		this.tinyArrow.size(32, 32);
+		this.tinyArrow.zOrder = 1000;
+		this.tinyArrow.filters = [new Laya.GlowFilter("#99FF99", 10, 0, 0)];
+	}
+
+	generate_monster(monster_amount){
 		let cur_amount = 0;
-		while(cur_amount < monster_amount){
-			let new_monster = Laya.Pool.getItemByClass("Gunner", Gunner);
-			new_monster.root_reset();
-			cur_amount += 1;
-			new_monster.placeRandomly();
+		let BG=Math.floor((this.number-1) / 5)
+		if(BG>-1)
+		{
+			let cur_amount = 0;
+			while (cur_amount < monster_amount) {
+				let new_monster = Laya.Pool.getItemByClass("Gunner", Gunner);
+				new_monster.root_reset();
+				cur_amount += 1;
+				new_monster.placeRandomly();
+			}
+			cur_amount = 0;
+			let strong_monster_amount1 = Math.floor(monster_amount / 3);
+			while (cur_amount < strong_monster_amount1) {
+				let new_monster = Laya.Pool.getItemByClass("Sharpshooter", Sharpshooter);
+				new_monster.root_reset();
+				cur_amount += 1;
+				new_monster.placeRandomly();
+			}
+		}
+		
+		if(BG>=1)
+		{
+			cur_amount = 0;
+			let strong_monster_amount2 = Math.floor(monster_amount / 6);
+			while (cur_amount < strong_monster_amount2) {
+				let new_monster = Laya.Pool.getItemByClass("wizard", wizard);
+				new_monster.root_reset();
+				cur_amount += 1;
+				new_monster.placeRandomly();
+			}
 		}
 
-		cur_amount = 0;
-		let strong_monster_amount1 = Math.floor(monster_amount / 3);
-		while(cur_amount < strong_monster_amount1){
-			let new_monster = Laya.Pool.getItemByClass("Sharpshooter", Sharpshooter);
-			new_monster.root_reset();
-			cur_amount += 1;
-			new_monster.placeRandomly();
-		}
-
-		cur_amount = 0;
-		let strong_monster_amount3 = Math.floor(monster_amount / 5);
-		while(cur_amount < strong_monster_amount3){
-			let new_monster = Laya.Pool.getItemByClass("Charizard", Charizard);
-			new_monster.root_reset();
-			cur_amount += 1;
-			new_monster.placeRandomly();
-		}
-
-		cur_amount = 0;
-		let strong_monster_amount2 = Math.floor(monster_amount / 7);
-		while(cur_amount < strong_monster_amount2){
-			let new_monster = Laya.Pool.getItemByClass("wizard", wizard);
-			new_monster.root_reset();
-			cur_amount += 1;
-			new_monster.placeRandomly();
+		if(BG>=2)
+		{
+			cur_amount = 0;
+			let strong_monster_amount3 = Math.floor(monster_amount / 10);
+			while (cur_amount < strong_monster_amount3) {
+				let new_monster = Laya.Pool.getItemByClass("Charizard", Charizard);
+				new_monster.root_reset();
+				cur_amount += 1;
+				new_monster.placeRandomly();
+			}
 		}
 	}
 
 	onFrame() {
-		if(this.paused){
+		if (this.paused) {
 			return;
 		}
 
@@ -199,7 +222,21 @@ export default class Screen extends Laya.Sprite  //screen
 		the_Hero.pos(Laya.Browser.clientWidth / 2, Laya.Browser.clientHeight / 2);
 		this.tiledMap.changeViewPort(the_Hero.mapX - Laya.Browser.clientWidth / 2, the_Hero.mapY - Laya.Browser.clientHeight / 2, Laya.Browser.clientWidth, Laya.Browser.clientHeight)
 		this.HPWindow.update()
-		this.score_Window.changeText("Score: "+this.score);
+		this.score_Window.changeText("Score: " + this.score);
+
+
+		// tiny arrow
+		if(Thing_list.length == 1)
+        {
+            this.tinyArrow.visible=true;
+            const dx=Thing_list[0].mapX-the_Hero.mapX;
+            const dy=Thing_list[0].mapY-the_Hero.mapY;
+            if(dx*dx+dy*dy>2500)
+                this.tinyArrow.rotation=180-Math.atan2(dx,dy)/Math.PI*180
+            else
+                this.tinyArrow.visible=false;
+        }
+        else this.tinyArrow.visible=false;
 	}
 
 	onMouseDown(e) {
@@ -279,25 +316,24 @@ export default class Screen extends Laya.Sprite  //screen
 		if (color === undefined) color = "#FFFFFF";
 		if (x == undefined || y === undefined) {
 			x = Laya.Browser.clientWidth / 2
-			y = Laya.Browser.clientHeight*0.45
+			y = Laya.Browser.clientHeight * 0.45
 		}
 		if (sz === undefined) sz = 20;
-		
+
 		this.dlg.changeText(text);
 		this.dlg.color = color;
 		this.dlg.pos(x, y);
 		this.dlg.fontSize = sz;
 		this.dlg.alpha = 1;
-		//Laya.Tween.to(this.dlg,{alpha:0,y:this.dlg.y-100,fontSize:this.dlg.fontSize*2},1000)
 	}
 
 	map_change() {
 		this.paused = true;
 		const number = this.number;
 		this.number += 1;
-		
-		let bg = Math.floor(number/15);
-		let idx = number%3;
+
+		let bg = Math.floor(number / 5);
+		let idx = number % 3;
 		const
 			TiledMap = Laya.TiledMap,
 			Rectangle = Laya.Rectangle,
@@ -316,7 +352,7 @@ export default class Screen extends Laya.Sprite  //screen
 		}
 
 		this.tiledMap.destroy();
-		this.tiledMap.createMap("res/tiledmaps/"+bg+idx+".json", new Rectangle(0, 0, Browser.width, Browser.height), Handler.create(this, this.onLoadedMap2));
+		this.tiledMap.createMap("res/tiledmaps/" + bg + idx + ".json", new Rectangle(0, 0, Browser.width, Browser.height), Handler.create(this, this.onLoadedMap2));
 	}
 
 	onLoadedMap2() {
@@ -331,13 +367,11 @@ export default class Screen extends Laya.Sprite  //screen
 		this.paused = false;
 	}
 
-	getURLs(str,n)
-    {
-        let urls=[];
-        for(var i =0;i<n;i+=1)
-        {
-            urls.push("res/atlas/"+str+i+".png")
-        }
-        return urls;
-    }
+	getURLs(str, n) {
+		let urls = [];
+		for (var i = 0; i < n; i += 1) {
+			urls.push("res/atlas/" + str + i + ".png")
+		}
+		return urls;
+	}
 }
