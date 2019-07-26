@@ -174,15 +174,13 @@ export default class Beings extends Laya.Sprite {
 
     placeRandomly()
     {
-        while(true){
-            let new_x = Math.random() * the_screen.mapX_max;
-            let new_y = Math.random() * the_screen.mapY_max;
-            if(this.reachable(new_x, new_y)){
-                this.mapX = new_x;
-                this.mapY = new_y;
-                break;
-            }
-        }
-        
+        var new_x = Math.random() * the_screen.mapX_max;
+        var new_y = Math.random() * the_screen.mapY_max;
+        if(!this.reachable(new_x, new_y)){
+            this.placeRandomly();
+            return;
+        }            
+        this.mapX = new_x;
+        this.mapY = new_y;
     }
 }

@@ -1,4 +1,3 @@
-import Beings from "./Beings"
 import Hero_Bullet_normal from "./Hero_Bullet_normal"
 import Gun from "./Gun"
 

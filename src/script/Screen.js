@@ -1,7 +1,5 @@
-import DragPoint from "./DragPoint"
 import Wheel from "./Wheel"
 import Hero from "./hero"
-import Goblin from "./Goblin"
 import Gunner from "./Gunner"
 import Gate from "./Gate"
 import HPWindow from "./HPWindow"
@@ -14,9 +12,6 @@ export default class Screen extends Laya.Sprite  //screen
 {
 	constructor(w, h) {
 		super();
-		const
-			Sprite = Laya.Sprite,
-			Event = Laya.Event;
 		this.width = this.width;
 		this.height = h;
 
@@ -51,7 +46,6 @@ export default class Screen extends Laya.Sprite  //screen
 			TiledMap = Laya.TiledMap,
 			Rectangle = Laya.Rectangle,
 			Handler = Laya.Handler,
-			Event = Laya.Event,
 			Browser = Laya.Browser;
 		this.tiledMap = new TiledMap();
 		this.tiledMap.createMap("res/tiledmaps/start.json", new Rectangle(0, 0, Browser.width, Browser.height), Handler.create(this, this.onLoadedMap));
@@ -105,7 +99,7 @@ export default class Screen extends Laya.Sprite  //screen
 		this.score_Window.zOrder = 1000;
 
 		// play music
-		laya.media.SoundManager.playMusic("res/sounds/BGM.aac", 0);
+		laya.media.SoundManager.playMusic("res/sounds/BGM.mp3", 0);
 
 		// run
 		this.paused = false;
@@ -130,7 +124,6 @@ export default class Screen extends Laya.Sprite  //screen
 		this.HPWindow = new HPWindow()
 
 		// tiny arrow
-		let L = 10;
 		this.tinyArrow = new Laya.Sprite();
 		Laya.stage.addChild(this.tinyArrow);
 		this.tinyArrow.loadImage("res/atlas/wheels/arrow.png")
@@ -236,17 +229,16 @@ export default class Screen extends Laya.Sprite  //screen
 
 
 		// tiny arrow
-		if(Thing_list.length == 1)
-        {
-            this.tinyArrow.visible=true;
-            const dx=Thing_list[0].mapX-the_Hero.mapX;
-            const dy=Thing_list[0].mapY-the_Hero.mapY;
-            if(dx*dx+dy*dy>2500)
-                this.tinyArrow.rotation=180-Math.atan2(dx,dy)/Math.PI*180
-            else
-                this.tinyArrow.visible=false;
-        }
-        else this.tinyArrow.visible=false;
+		if(Thing_list.length == 1){
+            this.tinyArrow.visible=true;
+            const dx=Thing_list[0].mapX-the_Hero.mapX;
+            const dy=Thing_list[0].mapY-the_Hero.mapY;
+            if(dx*dx+dy*dy>2500)
+                this.tinyArrow.rotation=180-Math.atan2(dx,dy)/Math.PI*180
+            else
+                this.tinyArrow.visible=false;
+        }
+        else this.tinyArrow.visible=false;
 	}
 
 	onMouseDown(e) {
@@ -352,10 +344,8 @@ export default class Screen extends Laya.Sprite  //screen
 		}
 		let idx = number % 3;
 		const
-			TiledMap = Laya.TiledMap,
 			Rectangle = Laya.Rectangle,
 			Handler = Laya.Handler,
-			Event = Laya.Event,
 			Browser = Laya.Browser;
 
 		for (let the_monster of Monster_list) {

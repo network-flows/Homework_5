@@ -3,9 +3,6 @@ export default class DragPoint extends Laya.Sprite  //no events
 	constructor(x,y,r)
 	{
 		super();
-		const 
-			Sprite = Laya.Sprite,
-			Event = Laya.Event;
 		Laya.stage.addChild(this);
 		
 		this.size(2*r,2*r);

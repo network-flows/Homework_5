@@ -44,7 +44,7 @@ export default class Bullet extends Beings{
         }
     }
 
-    attack(element){
+    attack(){
 
     }
 

@@ -1,7 +1,7 @@
 import Hero_Bullet from "./Hero_Bullet"
 
 export default class Hero_Bullet_huge extends Hero_Bullet {
-    constructor(vx, vy) {
+    constructor() {
         super();
         this.v_max = 20;
         this.Type = "Hero_Bullet_huge";

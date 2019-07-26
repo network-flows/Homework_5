@@ -5,9 +5,6 @@ export default class Wheel extends Laya.Sprite
 	constructor(x,y,r,hasSp)
 	{
 		super();
-		const 
-			Sprite = Laya.Sprite,
-			Event = Laya.Event;
 		Laya.stage.addChild(this);
 		
 		this.size(2*r,2*r);

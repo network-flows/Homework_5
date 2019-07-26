@@ -15,7 +15,6 @@ export default class HPWindow extends Laya.Sprite
     {
         if(this.HP!=the_Hero.HP||this.armor!=the_Hero.armor)
         {
-            const Text=Laya.Text
             this.HP=the_Hero.HP;
             this.armor=the_Hero.armor;
             let len_HP=(167-78)/the_Hero.HP_max*the_Hero.HP;

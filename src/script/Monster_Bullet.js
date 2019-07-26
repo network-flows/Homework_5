@@ -14,11 +14,11 @@ export default class Monster_Bullet extends Bullet{
         return attack_list;
     }
 
-    attackable(the_enemy){
+    attackable(){
         
     }
     
-    attack(element){
+    attack(){
         
     }
 

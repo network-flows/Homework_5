@@ -1,5 +1,4 @@
 import Bullet from "./Bullet"
-import Monster from "./Monster";
 
 export default class Hero_Bullet extends Bullet{
     constructor(){
@@ -16,7 +15,7 @@ export default class Hero_Bullet extends Bullet{
         return attack_list;
     }
 
-    attackable(the_enemy){
+    attackable(){
         
     }
 

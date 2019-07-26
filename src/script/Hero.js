@@ -1,7 +1,4 @@
 import Beings from "./Beings"
-import Bullet from "./Bullet";
-import Monster from "./Monster";
-import Hero_Bullet_normal from "./Hero_Bullet_normal";
 import Gun_normal from "./Gun_normal"
 import Shotgun from "./Shotgun"
 
@@ -32,7 +29,7 @@ export default class Hero extends Beings{
         this.nearest_thing = null;
 
         // gun
-        this.main_gun = new Laya.Pool.getItemByClass('Gun_normal', Gun_normal);;
+        this.main_gun = new Laya.Pool.getItemByClass('Gun_normal', Gun_normal);
         this.main_gun.root_reset();
         this.alternate_gun = new Laya.Pool.getItemByClass('Shotgun', Shotgun);
         this.alternate_gun.root_reset();
