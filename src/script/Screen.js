@@ -40,6 +40,10 @@ export default class Screen extends Laya.Sprite  //screen
 		Laya.Animation.createFrames(this.getURLs("gunner/right",4),"Gunner_right");
 		Laya.Animation.createFrames(this.getURLs("Sharpshooter/left",4),"Sharpshooter_left");
 		Laya.Animation.createFrames(this.getURLs("Sharpshooter/right",4),"Sharpshooter_right");
+		Laya.Animation.createFrames(this.getURLs("wizard/left",4),"wizard_left");
+		Laya.Animation.createFrames(this.getURLs("wizard/right",4),"wizard_right");
+		Laya.Animation.createFrames(this.getURLs("Charizard/left",4),"Charizard_left");
+		Laya.Animation.createFrames(this.getURLs("Charizard/right",4),"Charizard_right");
 	}
 
 	loadMap() {
@@ -87,6 +91,19 @@ export default class Screen extends Laya.Sprite  //screen
 		this.dlg.color = "#000000"
 		this.dlg.font = "Impact";
 		this.dlg.zOrder = 1000;
+
+		this.score=0;
+		this.score_Window=new Laya.Text();
+		Laya.stage.addChild(this.score_Window);
+		this.score_Window.pos(Laya.Browser.clientWidth/2,40);
+		this.score_Window.size(200, 100);
+		this.score_Window.pivot(100, 50);
+		this.score_Window.fontSize = 20;
+		this.score_Window.align = "center"
+		this.score_Window.valign = "middle"
+		this.score_Window.color = "#FF0000"
+		this.score_Window.font = "Impact";
+		this.score_Window.zOrder = 1000;
 
 		// play music
 		laya.media.SoundManager.playMusic("res/sounds/BGM.mp3", 0);
@@ -182,6 +199,7 @@ export default class Screen extends Laya.Sprite  //screen
 		the_Hero.pos(Laya.Browser.clientWidth / 2, Laya.Browser.clientHeight / 2);
 		this.tiledMap.changeViewPort(the_Hero.mapX - Laya.Browser.clientWidth / 2, the_Hero.mapY - Laya.Browser.clientHeight / 2, Laya.Browser.clientWidth, Laya.Browser.clientHeight)
 		this.HPWindow.update()
+		this.score_Window.changeText("Score: "+this.score);
 	}
 
 	onMouseDown(e) {

@@ -4,7 +4,7 @@ import Monster_Bullet_curse from "./Monster_Bullet_curse"
 export default class wizard extends Monster{
     constructor(){
         super();
-        this.Type = "Sharpshooter";
+        this.Type = "wizard";
 
         this.size(48,48)
         this.range = 10 * 40;

@@ -4,7 +4,7 @@ import Monster_Bullet_fire_ball from "./Monster_Bullet_fire_ball"
 export default class Charizard extends Monster{
     constructor(){
         super();
-        this.Type = "Sharpshooter";
+        this.Type = "Charizard";
 
         this.size(48,48)
         this.range = 10 * 40;
