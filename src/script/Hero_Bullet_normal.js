@@ -8,7 +8,7 @@ export default class Hero_Bullet_normal extends Hero_Bullet {
 
         this.r = 20;
         this.size(this.r*2,this.r*2)
-        this.graphics.drawCircle(this.r, this.r, this.r, "#FFFF00");
+        this.graphics.drawCircle(this.r, this.r, this.r, "#BBFFBB");
         this.filters = [new Laya.GlowFilter("#FFFFFF", 10, 0, 0)];
     }
 

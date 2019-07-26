@@ -124,13 +124,13 @@ export default class Beings extends Laya.Sprite {
     reachable(new_mapX, new_mapY){
         let point_set = [];
         point_set.push({x: new_mapX + this.width/2, y: new_mapY + this.height/2});
-        point_set.push({x: new_mapX, y: new_mapY + this.height/2});
+        point_set.push({x: new_mapX               , y: new_mapY + this.height/2});
         point_set.push({x: new_mapX - this.width/2, y: new_mapY + this.height/2});
-        point_set.push({x: new_mapX - this.width/2, y: new_mapY});
+        point_set.push({x: new_mapX - this.width/2, y: new_mapY                });
         point_set.push({x: new_mapX - this.width/2, y: new_mapY - this.height/2});
-        point_set.push({x: new_mapX, y: new_mapY - this.height/2});
+        point_set.push({x: new_mapX               , y: new_mapY - this.height/2});
         point_set.push({x: new_mapX + this.width/2, y: new_mapY - this.height/2});
-        point_set.push({x: new_mapX + this.width/2, y: new_mapY});
+        point_set.push({x: new_mapX + this.width/2, y: new_mapY                });
 
         let ok = true;
 
@@ -161,53 +161,6 @@ export default class Beings extends Laya.Sprite {
         else if(this.reachable(this.mapX, this.mapY + dy / 2)){
             this.mapY += dy / 2;
         }
-
-        /*
-        while(Math.abs(dx) > 0.3 || Math.abs(dy) > 0.3){
-            console.log("...")
-            // try: move x
-            if(dx > 0.1){
-                if(this.reachable(this.mapX + 0.3, this.mapY)){
-                    dx -= 0.3;
-                    this.mapX += 0.3;
-                }
-                else{
-                    dx = 0;
-                }
-            }
-
-            if(dx < -0.1){
-                if(this.reachable(this.mapX - 0.3, this.mapY)){
-                    dx += 0.3;
-                    this.mapX -= 0.3;
-                }
-                else{
-                    dx = 0;
-                }
-            }
-
-            // try: move y
-            if(dy > 0.1){
-                if(this.reachable(this.mapX, this.mapY + 0.3)){
-                    dy -= 0.3;
-                    this.mapY += 0.3;
-                }
-                else{
-                    dy = 0;
-                }
-            }
-
-            if(dy < -0.1){
-                if(this.reachable(this.mapX, this.mapY - 0.3)){
-                    dy += 0.3;
-                    this.mapY -= 0.3;
-                }
-                else{
-                    dy = 0;
-                }
-            }
-        }
-        */
     }
     rotate_v(old_x, old_y, a){
         let new_x = old_x * Math.cos(a) - old_y * Math.sin(a);
@@ -217,5 +170,19 @@ export default class Beings extends Laya.Sprite {
             x: new_x,
             y: new_y
         };
+    }
+
+    placeRandomly()
+    {
+        while(true){
+            let new_x = Math.random() * the_screen.mapX_max;
+            let new_y = Math.random() * the_screen.mapY_max;
+            if(this.reachable(new_x, new_y)){
+                this.mapX = new_x;
+                this.mapY = new_y;
+                break;
+            }
+        }
+        
     }
 }

@@ -60,10 +60,16 @@ export default class Screen extends Laya.Sprite  //screen
 
 		this.whl = new Wheel(this.width / 4, this.height * 3 / 4, this.width / 15, true);
 		this.atk = new Wheel(this.width * 3 / 4, this.height * 3 / 4, this.width / 15);
-		this.chg = new Wheel(this.width * 1 / 2, this.height * 3 / 4, this.width / 30);
-		this.atk.type = "shoot";
+		this.chg = new Wheel(this.width * 0.83, this.height *0.55, this.width / 30);
+		this.setPicture("pick");
+		this.setPicture("shoot");
+		this.whl.loadImage("res/atlas/wheels/whl.png")
+		this.chg.loadImage("res/atlas/wheels/chg.png")
 		this.whl.zOrder = 1000;
 		this.atk.zOrder = 1001;
+		this.chg.zOrder = 1002;
+		this.whl.sp.zOrder=1003;
+
 		window.the_Hero = Laya.Pool.getItemByClass("Hero", Hero);
 		the_Hero.root_reset();
 
@@ -112,15 +118,7 @@ export default class Screen extends Laya.Sprite  //screen
 			let new_monster = Laya.Pool.getItemByClass("Gunner", Gunner);
 			new_monster.root_reset();
 			cur_amount += 1;
-			while(true){
-				let new_x = Math.random() * this.mapX_max;
-				let new_y = Math.random() * this.mapY_max;
-				if(new_monster.reachable(new_x, new_y)){
-					new_monster.mapX = new_x;
-					new_monster.mapY = new_y;
-					break;
-				}
-			}
+			new_monster.placeRandomly();
 		}
 
 		cur_amount = 0;
@@ -129,15 +127,7 @@ export default class Screen extends Laya.Sprite  //screen
 			let new_monster = Laya.Pool.getItemByClass("Sharpshooter", Sharpshooter);
 			new_monster.root_reset();
 			cur_amount += 1;
-			while(true){
-				let new_x = Math.random() * this.mapX_max;
-				let new_y = Math.random() * this.mapY_max;
-				if(new_monster.reachable(new_x, new_y)){
-					new_monster.mapX = new_x;
-					new_monster.mapY = new_y;
-					break;
-				}
-			}
+			new_monster.placeRandomly();
 		}
 	}
 
@@ -233,15 +223,15 @@ export default class Screen extends Laya.Sprite  //screen
 	}
 
 	setPicture(str) {
-		if (str == "shoot" && this.atk.type == "pick") {
+		if (str == "shoot" && this.atk.type != "shoot") {
 			const atk = this.atk;
 			atk.type = "shoot"
-			atk.graphics.drawCircle(atk.r, atk.r, atk.r, "#FFFF00");
+			atk.loadImage("res/atlas/wheels/atk1.png")
 		}
-		else if (str == "pick" && this.atk.type == "shoot") {
+		else if (str == "pick" && this.atk.type != "pick") {
 			const atk = this.atk;
 			atk.type = "pick"
-			atk.graphics.drawCircle(atk.r, atk.r, atk.r, "#000000");
+			atk.loadImage("res/atlas/wheels/atk2.png")
 		}
 	}
 
@@ -250,9 +240,10 @@ export default class Screen extends Laya.Sprite  //screen
 		if (color === undefined) color = "#FFFFFF";
 		if (x == undefined || y === undefined) {
 			x = Laya.Browser.clientWidth / 2
-			y = Laya.Browser.clientHeight / 2
+			y = Laya.Browser.clientHeight*0.45
 		}
 		if (sz === undefined) sz = 20;
+		
 		this.dlg.changeText(text);
 		this.dlg.color = color;
 		this.dlg.pos(x, y);
@@ -267,7 +258,7 @@ export default class Screen extends Laya.Sprite  //screen
 		this.number += 1;
 		
 		let bg = Math.floor(number/15);
-		let idx = number%2;
+		let idx = number%3;
 		const
 			TiledMap = Laya.TiledMap,
 			Rectangle = Laya.Rectangle,
@@ -290,11 +281,11 @@ export default class Screen extends Laya.Sprite  //screen
 	}
 
 	onLoadedMap2() {
-		the_Hero.mapX = 110;
-		the_Hero.mapY = 110;
+		the_Hero.placeRandomly()
 
 		the_Hero.root_reset();
-		this.atk.type = "shoot";
+		this.atk.type = undefined;
+		this.setPicture();
 		this.tiledMap.changeViewPort(0, 0, Laya.Browser.clientWidth, Laya.Browser.clientHeight)
 		this.generate_monster(this.number * this.difficulty)
 

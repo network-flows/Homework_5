@@ -32,20 +32,27 @@ export default class Hero extends Beings{
         this.nearest_thing = null;
 
         // gun
-        this.main_gun = new Laya.Pool.getItemByClass('Shotgun', Shotgun);
+        this.main_gun = new Laya.Pool.getItemByClass('Gun_normal', Gun_normal);;
         this.main_gun.root_reset();
-        this.alternate_gun = new Laya.Pool.getItemByClass('Gun_normal', Gun_normal);;
+        this.alternate_gun = new Laya.Pool.getItemByClass('Shotgun', Shotgun);
         this.alternate_gun.root_reset();
     }
 
     action(){
         // change gun
-        if(the_screen.getChange()){
+        let changing=the_screen.getChange();
+        if(changing&&!this.preChanging){
             let tmp = this.main_gun;
             this.main_gun = this.alternate_gun;
+            this.main_gun.zOrder=this.zOrder+1;
+            this.main_gun.visible=true;
             this.alternate_gun = tmp;
+            this.alternate_gun.visible=false;
             this.shoot_power = 0;
+            console.log(this.main_gun.sentence)
+            the_screen.setText(this.main_gun.sentence);
         }
+        this.preChanging=changing
 
         // repair armor
         if(this.armor < this.armor_max){
@@ -215,7 +222,11 @@ export default class Hero extends Beings{
     branch_reset(){
         this.HP = this.HP_max;
         this.armor = this.armor_max;
-
+        this.preChanging=false;
+        this.shoot_power=0;
+        this.main_gun.zOrder=this.zOrder+1;
+        this.main_gun.visible=true;
+        this.alternate_gun.visible=false;
         this.ani.play(0,true,"hero_right")
         this.pre_dir="right"
     }

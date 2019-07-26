@@ -34,6 +34,7 @@ export default class Monster extends Beings{
             this.skill_power = 0;
             this.skill();
         }
+        if(!this.reachable(this.mapX,this.mapY))console.log("bad thing happened now")
     }
 
     force(another){
@@ -96,11 +97,10 @@ export default class Monster extends Beings{
     }
 
     branch_reset(){
-        if(this.Type !== "Sharpshooter"){
-            Monster_list.push(this)
-            this.pre_dir="right"
-            this.ani.play(0, true, this.Type+"_right");
-        }
+        Monster_list.push(this)
+        this.pre_dir="right"
+        this.skill_power=this.skill_cost*Math.random();
+        this.ani.play(0, true, this.Type+"_right");
         this.leaf_reset()
     }
 

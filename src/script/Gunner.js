@@ -6,8 +6,7 @@ export default class Gunner extends Monster{
         super();
         this.Type = "Gunner";
 
-        this.width = 100;
-        this.height = 100;
+        this.size(48,48)
         this.range = 10 * 40;
         this.v_max = 3;
         

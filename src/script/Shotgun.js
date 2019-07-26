@@ -10,11 +10,10 @@ export default class Shotgun extends Gun{
         this.first_waiting = 2;
         this.second_waiting = 50;
         
-        this.loadImage("res/guns/gun0.png")
+        this.loadImage("res/guns/gun1.png")
+        //this.graphics.drawRect(0,0,this.width,this.height,"#FFFF00");
         Laya.stage.addChild(this);
-        this.size(64,32);
-        this.w=64;
-        this.h=32;
+        this.size(32,32);
         this.pos(Laya.Browser.clientWidth/2, Laya.Browser.clientHeight/2);
         this.bullet = Hero_Bullet_normal;
         this.bullet_type = "Hero_Bullet_normal"
@@ -41,7 +40,8 @@ export default class Shotgun extends Gun{
     }
 
     leaf_reset(){
-        this.pivot(8,16);
+        this.pivot(7,15);
         this.visible=true;
+        this.sentence="霰弹枪"
     }
 }

@@ -12,11 +12,11 @@ export default class Wheel extends Laya.Sprite
 		
 		this.size(2*r,2*r);
 		this.pivot(r,r);
-		this.graphics.drawCircle(r,r,r,"#FFFFFF");
+		//this.graphics.drawCircle(r,r,r,"#FFFFFF");
 		this.pos(x,y);
 		this.r=r;
         this.ID=null;
-        this.alpha=0.4;
+        this.alpha=0.6;
 		this.mouseThrough=true;
 		this.hasSp=hasSp;
 		if(this.hasSp)

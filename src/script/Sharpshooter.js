@@ -4,10 +4,9 @@ import Monster_Bullet_huge from "./Monster_Bullet_huge"
 export default class Sharpshooter extends Monster{
     constructor(){
         super();
-        this.Type = "Gunner";
+        this.Type = "Sharpshooter";
 
-        this.width = 100;
-        this.height = 100;
+        this.size(48,48)
         this.range = 20 * 40;
         this.v_max = 3;
 

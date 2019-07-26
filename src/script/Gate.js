@@ -13,7 +13,7 @@ export default class Gate extends Thing{
         this.ani = new Laya.Animation();
         this.ani.interval=100;
         this.ani.pivot(this.width/2,this.height/2);
-
+        this.ani.filters=[new Laya.GlowFilter("FFFFAA",5,0,0)];
 
         /*this.r=15;
         this.pivot(this.r,this.r)
