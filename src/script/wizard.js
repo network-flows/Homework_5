@@ -1,7 +1,7 @@
 import Monster from "./Monster"
-import Monster_Bullet_huge from "./Monster_Bullet_huge"
+import Monster_Bullet_curse from "./Monster_Bullet_curse"
 
-export default class Sharpshooter extends Monster{
+export default class wizard extends Monster{
     constructor(){
         super();
         this.Type = "Sharpshooter";
@@ -17,9 +17,11 @@ export default class Sharpshooter extends Monster{
     }
 
     skill(){
-        let new_bullet = Laya.Pool.getItemByClass("Monster_Bullet_huge", Monster_Bullet_huge);
+        let new_bullet = Laya.Pool.getItemByClass("Monster_Bullet_curse", Monster_Bullet_curse);
         new_bullet.root_reset();
         new_bullet.init(this);
+        new_bullet.mapX = the_Hero.mapX;
+        new_bullet.mapY = the_Hero.mapY;
     }
 
     leaf_reset(){

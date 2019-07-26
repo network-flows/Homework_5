@@ -7,6 +7,8 @@ import Gate from "./Gate"
 import HPWindow from "./HPWindow"
 import God from "./God"
 import Sharpshooter from "./Sharpshooter"
+import wizard from "./wizard"
+import Charizard from "./Charizard"
 
 export default class Screen extends Laya.Sprite  //screen
 {
@@ -113,6 +115,7 @@ export default class Screen extends Laya.Sprite  //screen
 	}	
 
 	generate_monster(monster_amount) {
+		monster_amount = 10;
 		let cur_amount = 0;
 		while(cur_amount < monster_amount){
 			let new_monster = Laya.Pool.getItemByClass("Gunner", Gunner);
@@ -122,9 +125,27 @@ export default class Screen extends Laya.Sprite  //screen
 		}
 
 		cur_amount = 0;
-		let strong_monster_amount = Math.floor(monster_amount / 5);
-		while(cur_amount < strong_monster_amount){
+		let strong_monster_amount1 = Math.floor(monster_amount / 5);
+		while(cur_amount < strong_monster_amount1){
 			let new_monster = Laya.Pool.getItemByClass("Sharpshooter", Sharpshooter);
+			new_monster.root_reset();
+			cur_amount += 1;
+			new_monster.placeRandomly();
+		}
+
+		cur_amount = 0;
+		let strong_monster_amount2 = Math.floor(monster_amount / 5);
+		while(cur_amount < strong_monster_amount2){
+			let new_monster = Laya.Pool.getItemByClass("wizard", wizard);
+			new_monster.root_reset();
+			cur_amount += 1;
+			new_monster.placeRandomly();
+		}
+
+		cur_amount = 0;
+		let strong_monster_amount3 = Math.floor(monster_amount / 5);
+		while(cur_amount < strong_monster_amount3){
+			let new_monster = Laya.Pool.getItemByClass("Charizard", Charizard);
 			new_monster.root_reset();
 			cur_amount += 1;
 			new_monster.placeRandomly();

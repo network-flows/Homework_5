@@ -4,7 +4,7 @@ export default class Hero_Bullet_huge extends Hero_Bullet {
     constructor(vx, vy) {
         super();
         this.v_max = 20;
-        this.Type = "Hero_Bullet_normal";
+        this.Type = "Hero_Bullet_huge";
 
         this.r = 20;
         this.size(this.r*2,this.r*2)
