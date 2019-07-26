@@ -49,7 +49,6 @@ export default class Hero extends Beings{
             this.alternate_gun = tmp;
             this.alternate_gun.visible=false;
             this.shoot_power = 0;
-            console.log(this.main_gun.sentence)
             the_screen.setText(this.main_gun.sentence);
         }
         this.preChanging=changing
@@ -217,6 +216,10 @@ export default class Hero extends Beings{
     dead(){
         this.ani.visible=false;
         Laya.stage.removeChild(this.ani);
+        the_screen.shadowPauser.visible=true;
+        the_screen.paused=true;
+        the_screen.setText("游戏结束！\n\n 分数："+the_screen.score,undefined,undefined,undefined,50)
+        return;
     }
 
     branch_reset(){

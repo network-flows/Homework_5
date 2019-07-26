@@ -44,8 +44,6 @@ export default class Screen extends Laya.Sprite  //screen
 		Laya.Animation.createFrames(this.getURLs("wizard/right", 4), "wizard_right");
 		Laya.Animation.createFrames(this.getURLs("Charizard/left", 4), "Charizard_left");
 		Laya.Animation.createFrames(this.getURLs("Charizard/right", 4), "Charizard_right");
-
-		this.score = 0;
 	}
 
 	loadMap() {
@@ -92,7 +90,7 @@ export default class Screen extends Laya.Sprite  //screen
 		this.dlg.valign = "middle"
 		this.dlg.color = "#000000"
 		this.dlg.font = "Impact";
-		this.dlg.zOrder = 1000;
+		this.dlg.zOrder = 2001;
 
 		this.score_Window = new Laya.Text();
 		Laya.stage.addChild(this.score_Window);
@@ -143,6 +141,18 @@ export default class Screen extends Laya.Sprite  //screen
 		this.tinyArrow.size(32, 32);
 		this.tinyArrow.zOrder = 1000;
 		this.tinyArrow.filters = [new Laya.GlowFilter("#99FF99", 10, 0, 0)];
+
+		this.score = 0;
+
+		this.shadowPauser=new Laya.Sprite();
+		Laya.stage.addChild(this.shadowPauser);
+		this.shadowPauser.pos(0,0);
+		this.shadowPauser.size(this.width,this.height);
+		this.shadowPauser.alpha=0.7;
+		this.shadowPauser.visible=false;
+		this.shadowPauser.graphics.drawRect(0,0,this.width,this.height,"#333333");
+		this.shadowPauser.zOrder=2000;
+		
 	}
 
 	generate_monster(monster_amount){
@@ -331,8 +341,15 @@ export default class Screen extends Laya.Sprite  //screen
 		this.paused = true;
 		const number = this.number;
 		this.number += 1;
-
+		
 		let bg = Math.floor(number / 5);
+		if(bg>2)
+		{
+			this.shadowPauser.visible=true;
+			this.paused=true;
+			this.setText("游戏胜利！\n\n 分数："+this.score,undefined,undefined,undefined,50)
+			return;
+		}
 		let idx = number % 3;
 		const
 			TiledMap = Laya.TiledMap,

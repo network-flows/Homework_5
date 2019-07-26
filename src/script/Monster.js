@@ -34,7 +34,6 @@ export default class Monster extends Beings{
             this.skill_power = 0;
             this.skill();
         }
-        if(!this.reachable(this.mapX,this.mapY))console.log("bad thing happened now")
     }
 
     force(another){
@@ -108,9 +107,6 @@ export default class Monster extends Beings{
         }
         else if(this.Type == "wizard"){
             the_screen.score += 7;
-        }
-        else{
-            console.log("unknow monster!")
         }
     }
 
