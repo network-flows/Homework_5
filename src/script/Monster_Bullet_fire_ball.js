@@ -10,8 +10,8 @@ export default class Monster_Bullet_fire_ball extends Monster_Bullet {
 
         // set picture
         this.r = 10;
-        this.graphics.drawCircle(0, 0, this.r, "#123456");
-        this.filters = [new Laya.GlowFilter("#123456", 10, 0, 0)];
+        this.graphics.drawCircle(0, 0, this.r, "#ff4400");
+        this.filters = [new Laya.GlowFilter("#ff0000", 10, 0, 0)];
     }
 
     attackable(the_enemy) {

@@ -94,6 +94,23 @@ export default class Monster extends Beings{
             let a_gate = Laya.Pool.getItemByClass("Gate", Gate);
             a_gate.root_reset();
         }
+
+        // add score
+        if(this.Type == "Gunner"){
+            the_screen.score += 1;
+        }
+        else if(this.Type == "Sharpshooter"){
+            the_screen.score += 3;
+        }
+        else if(this.Type == "Charizard"){
+            the_screen.score += 5;
+        }
+        else if(this.Type == "wizard"){
+            the_screen.score += 7;
+        }
+        else{
+            console.log("unknow monster!")
+        }
     }
 
     branch_reset(){

@@ -11,6 +11,7 @@ export default class God extends Thing{
         this.sentence = "冒险家，你需要指引吗？";
 
         // set picture
+        Laya.Animation.createFrames(this.getURLs("god/down",3),"god_down");
         this.ani = new Laya.Animation();
         this.ani.interval=100;
         this.ani.pivot(this.width/2,this.height/2);

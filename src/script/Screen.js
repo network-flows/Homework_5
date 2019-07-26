@@ -44,7 +44,8 @@ export default class Screen extends Laya.Sprite  //screen
 		Laya.Animation.createFrames(this.getURLs("wizard/right",4),"wizard_right");
 		Laya.Animation.createFrames(this.getURLs("Charizard/left",4),"Charizard_left");
 		Laya.Animation.createFrames(this.getURLs("Charizard/right",4),"Charizard_right");
-		Laya.Animation.createFrames(this.getURLs("god/down",3),"god_down");
+
+		this.score = 0;
 	}
 
 	loadMap() {
@@ -93,7 +94,6 @@ export default class Screen extends Laya.Sprite  //screen
 		this.dlg.font = "Impact";
 		this.dlg.zOrder = 1000;
 
-		this.score=0;
 		this.score_Window=new Laya.Text();
 		Laya.stage.addChild(this.score_Window);
 		this.score_Window.pos(Laya.Browser.clientWidth/2,40);
@@ -107,7 +107,7 @@ export default class Screen extends Laya.Sprite  //screen
 		this.score_Window.zOrder = 1000;
 
 		// play music
-		laya.media.SoundManager.playMusic("res/sounds/BGM.mp3", 0);
+		laya.media.SoundManager.playMusic("res/sounds/BGM.aac", 0);
 
 		// run
 		this.paused = false;
@@ -130,17 +130,9 @@ export default class Screen extends Laya.Sprite  //screen
 
 		// HP
 		this.HPWindow = new HPWindow()
-		let L=10;
-		/*
-		this.tinyArrow=new Laya.Sprite();
-		this.tinyArrow.graphics.drawPoly(0,0,[-L,0,L,0,0,L]);
-		this.tinyArrow.alpha=0.5;
-		this.tinyArrow.visible=true;
-		this.tinyArrow.pos(Laya.Browser.clientWidth/2,Laya.Browser.clientHeight/2);*/
 	}	
 
 	generate_monster(monster_amount) {
-		monster_amount = 10;
 		let cur_amount = 0;
 		while(cur_amount < monster_amount){
 			let new_monster = Laya.Pool.getItemByClass("Gunner", Gunner);
@@ -150,18 +142,9 @@ export default class Screen extends Laya.Sprite  //screen
 		}
 
 		cur_amount = 0;
-		let strong_monster_amount1 = Math.floor(monster_amount / 5);
+		let strong_monster_amount1 = Math.floor(monster_amount / 3);
 		while(cur_amount < strong_monster_amount1){
 			let new_monster = Laya.Pool.getItemByClass("Sharpshooter", Sharpshooter);
-			new_monster.root_reset();
-			cur_amount += 1;
-			new_monster.placeRandomly();
-		}
-
-		cur_amount = 0;
-		let strong_monster_amount2 = Math.floor(monster_amount / 5);
-		while(cur_amount < strong_monster_amount2){
-			let new_monster = Laya.Pool.getItemByClass("wizard", wizard);
 			new_monster.root_reset();
 			cur_amount += 1;
 			new_monster.placeRandomly();
@@ -171,6 +154,15 @@ export default class Screen extends Laya.Sprite  //screen
 		let strong_monster_amount3 = Math.floor(monster_amount / 5);
 		while(cur_amount < strong_monster_amount3){
 			let new_monster = Laya.Pool.getItemByClass("Charizard", Charizard);
+			new_monster.root_reset();
+			cur_amount += 1;
+			new_monster.placeRandomly();
+		}
+
+		cur_amount = 0;
+		let strong_monster_amount2 = Math.floor(monster_amount / 7);
+		while(cur_amount < strong_monster_amount2){
+			let new_monster = Laya.Pool.getItemByClass("wizard", wizard);
 			new_monster.root_reset();
 			cur_amount += 1;
 			new_monster.placeRandomly();

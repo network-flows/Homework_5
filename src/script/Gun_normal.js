@@ -9,12 +9,12 @@ export default class Gun_normal extends Gun{
 
 
         this.first_waiting = 1;
-        this.second_waiting = 3;
+        this.second_waiting = 10;
         
         this.loadImage("res/guns/gun0.png")
         Laya.stage.addChild(this);
         this.size(64,32);
-        this.pos(Laya.Browser.clientWidth/2,Laya.Browser.clientHeight/2+14);
+        this.pos(Laya.Browser.clientWidth/2,Laya.Browser.clientHeight/2);
         this.bullet = Hero_Bullet_normal;
         this.bullet_type = "Hero_Bullet_normal"
     }
@@ -25,7 +25,7 @@ export default class Gun_normal extends Gun{
     }
 
     leaf_reset(){
-        this.pivot(2,16);
+        this.pivot(8,16);
         this.visible=true;
         this.sentence="杀虫剂"
     }

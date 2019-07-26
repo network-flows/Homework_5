@@ -38,6 +38,6 @@ export default class Charizard extends Monster{
     }
 
     leaf_reset(){
-        this.HP = 20;
+        this.HP = 100;
     }
 }
